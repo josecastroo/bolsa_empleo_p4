@@ -1,7 +1,9 @@
 package com.example.bolsa_empleo.controller;
 
 import com.example.bolsa_empleo.model.Empresa;
+import com.example.bolsa_empleo.model.Puesto;
 import com.example.bolsa_empleo.repository.EmpresaRepository;
+import com.example.bolsa_empleo.repository.PuestoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,12 @@ import jakarta.servlet.http.HttpSession;
 public class EmpresaController {
 
     private final EmpresaRepository empresaRepository;
+    private final PuestoRepository puestoRepository;
 
-    public EmpresaController(EmpresaRepository empresaRepository) {
+    public EmpresaController(EmpresaRepository empresaRepository,
+                             PuestoRepository puestoRepository) {
         this.empresaRepository = empresaRepository;
+        this.puestoRepository = puestoRepository;
     }
 
     // mostrar form
@@ -71,5 +76,38 @@ public class EmpresaController {
         model.addAttribute("empresa", empresa);
 
         return "presentation/empresa/dashboard";
+    }
+
+    // crear puesto
+    @GetMapping("/puesto/nuevo")
+    public String mostrarFormularioPuesto(HttpSession session, Model model) {
+
+        Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
+
+        if (empresa == null) {
+            return "redirect:/empresa/login";
+        }
+
+        model.addAttribute("puesto", new Puesto());
+
+        return "presentation/empresa/crear_puesto";
+    }
+
+    @PostMapping("/puesto")
+    public String guardarPuesto(@ModelAttribute Puesto puesto,
+                                HttpSession session) {
+        Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
+
+        if (empresa == null) {
+            return "redirect:/empresa/login";
+        }
+        puesto.setEmpresa(empresa);
+        puesto.setActive(true);
+        puesto.setCreatedAt(java.time.LocalDateTime.now());
+
+        empresaRepository.flush();
+        puestoRepository.save(puesto);
+
+        return "redirect:/empresa/dashboard";
     }
 }

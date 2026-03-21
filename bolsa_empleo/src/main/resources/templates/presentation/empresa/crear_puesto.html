@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear puesto</title>
+</head>
+
+<body>
+    <h2>Crear Puesto</h2>
+
+    <form th:action="@{/empresa/puesto}" th:object="${puesto}" method="post">
+
+        <label>Descripción:</label>
+        <textarea th:field="*{description}" required></textarea><br>
+
+        <label>Salario:</label>
+        <input type="number" step="0.01" th:field="*{salary}" required><br>
+
+        <label>Tipo:</label>
+        <select th:field="*{type}">
+            <option value="PUBLIC">PUBLIC</option>
+            <option value="PRIVATE">PRIVATE</option>
+        </select><br>
+
+        <button type="submit">Crear</button>
+
+    </form>
+</body>
+
+</html>
