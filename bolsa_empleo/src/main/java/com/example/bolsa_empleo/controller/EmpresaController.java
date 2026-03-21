@@ -28,9 +28,31 @@ public class EmpresaController {
     public String registrarEmpresa(@ModelAttribute Empresa empresa) {
 
         empresa.setApproved(false); // pendiente de aprobación
-
         empresaRepository.save(empresa);
-
         return "redirect:/empresa/registro?success";
+    }
+
+    // login
+    @GetMapping("/login")
+    public String mostrarLogin() {
+        return "presentation/empresa/login";
+    }
+
+    @PostMapping("/login")
+    public String loginEmpresa(@RequestParam String email,
+                               @RequestParam String password,
+                               Model model) {
+
+        var empresaOpt = empresaRepository.findByEmailAndPassword(email, password);
+
+        if (empresaOpt.isPresent()) {
+            Empresa empresa = empresaOpt.get();
+
+            if (!empresa.isApproved()) {
+                return "redirect:/empresa/login?notApproved";
+            }
+            return "redirect:/empresa/dashboard";
+        }
+        return "redirect:/empresa/login?error";
     }
 }
