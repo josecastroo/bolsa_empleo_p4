@@ -9,6 +9,23 @@
 <body>
   <h2 th:text="'Bienvenido ' + ${empresa.name}"></h2>
 
+  <h3>Mis puestos</h3>
+
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Descripción</th>
+      <th>Salario</th>
+      <th>Tipo</th>
+    </tr>
+
+    <tr th:each="p : ${puestos}">
+      <td th:text="${p.id}"></td>
+      <td th:text="${p.description}"></td>
+      <td th:text="${p.salary}"></td>
+      <td th:text="${p.type}"></td>
+    </tr>
+  </table>
   <a href="/empresa/puesto/nuevo">Crear Puesto</a>
 </body>
 

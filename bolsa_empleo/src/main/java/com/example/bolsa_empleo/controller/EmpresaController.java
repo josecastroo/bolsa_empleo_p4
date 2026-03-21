@@ -66,15 +66,14 @@ public class EmpresaController {
     // dashboard
     @GetMapping("/dashboard")
     public String dashboardEmpresa(HttpSession session, Model model) {
-
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
             return "redirect:/empresa/login";
         }
-
+        var puestos = puestoRepository.findByEmpresaId(empresa.getId());
         model.addAttribute("empresa", empresa);
-
+        model.addAttribute("puestos", puestos);
         return "presentation/empresa/dashboard";
     }
 
