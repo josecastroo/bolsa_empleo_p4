@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class PuestoCaracteristica {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

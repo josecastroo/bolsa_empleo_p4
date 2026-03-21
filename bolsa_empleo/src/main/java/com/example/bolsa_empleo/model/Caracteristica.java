@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 public class Caracteristica {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
