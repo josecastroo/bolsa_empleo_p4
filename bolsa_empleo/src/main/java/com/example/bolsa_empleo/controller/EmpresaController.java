@@ -2,12 +2,18 @@ package com.example.bolsa_empleo.controller;
 
 import com.example.bolsa_empleo.model.Empresa;
 import com.example.bolsa_empleo.model.Puesto;
+import com.example.bolsa_empleo.model.Caracteristica;
+import com.example.bolsa_empleo.model.PuestoCaracteristica;
+import com.example.bolsa_empleo.repository.CaracteristicaRepository;
 import com.example.bolsa_empleo.repository.EmpresaRepository;
 import com.example.bolsa_empleo.repository.PuestoRepository;
+import com.example.bolsa_empleo.repository.PuestoCaracteristicaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/empresa")
@@ -15,11 +21,17 @@ public class EmpresaController {
 
     private final EmpresaRepository empresaRepository;
     private final PuestoRepository puestoRepository;
+    private final CaracteristicaRepository caracteristicaRepository;
+    private final PuestoCaracteristicaRepository puestoCaracteristicaRepository;
 
     public EmpresaController(EmpresaRepository empresaRepository,
-                             PuestoRepository puestoRepository) {
+                             PuestoRepository puestoRepository,
+                             CaracteristicaRepository caracteristicaRepository,
+                             PuestoCaracteristicaRepository puestoCaracteristicaRepository) {
         this.empresaRepository = empresaRepository;
         this.puestoRepository = puestoRepository;
+        this.caracteristicaRepository = caracteristicaRepository;
+        this.puestoCaracteristicaRepository = puestoCaracteristicaRepository;
     }
 
     // mostrar form
@@ -80,21 +92,23 @@ public class EmpresaController {
     // crear puesto
     @GetMapping("/puesto/nuevo")
     public String mostrarFormularioPuesto(HttpSession session, Model model) {
-
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
             return "redirect:/empresa/login";
         }
-
         model.addAttribute("puesto", new Puesto());
+        model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
 
         return "presentation/empresa/crear_puesto";
     }
 
     @PostMapping("/puesto")
     public String guardarPuesto(@ModelAttribute Puesto puesto,
+                                @RequestParam(required = false) List<Long> caracteristicaIds,
+                                @RequestParam(required = false) List<Integer> niveles,
                                 HttpSession session) {
+
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
@@ -103,10 +117,20 @@ public class EmpresaController {
         puesto.setEmpresa(empresa);
         puesto.setActive(true);
         puesto.setCreatedAt(java.time.LocalDateTime.now());
-
-        empresaRepository.flush();
         puestoRepository.save(puesto);
 
+        if (caracteristicaIds != null && niveles != null) {
+            for (int i = 0; i < caracteristicaIds.size(); i++) {
+                Caracteristica c = caracteristicaRepository.findById(caracteristicaIds.get(i)).orElse(null);
+
+                PuestoCaracteristica pc = new PuestoCaracteristica();
+                pc.setPuesto(puesto);
+                pc.setCaracteristica(c);
+                pc.setRequiredLevel(niveles.get(i));
+
+                puestoCaracteristicaRepository.save(pc);
+            }
+        }
         return "redirect:/empresa/dashboard";
     }
 }

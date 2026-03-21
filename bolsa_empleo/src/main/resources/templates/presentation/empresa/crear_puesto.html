@@ -23,6 +23,19 @@
             <option value="PRIVATE">PRIVATE</option>
         </select><br>
 
+        <h3>Características requeridas</h3>
+
+        <div th:each="c : ${caracteristicas}">
+            <label>
+                <input type="checkbox" name="caracteristicaIds" th:value="${c.id}">
+                <span th:text="${c.name}"></span>
+            </label>
+
+            Nivel:
+            <input type="number" name="niveles" min="1" max="5">
+            <br>
+        </div>
+
         <button type="submit">Crear</button>
 
     </form>
