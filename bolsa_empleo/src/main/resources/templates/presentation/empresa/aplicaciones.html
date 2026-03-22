@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Aplicaciones</title>
+</head>
+<body>
+
+<h2 th:text="'Aplicaciones para: ' + ${puesto.description}"></h2>
+
+<table border="1">
+    <tr>
+        <th>Candidato</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+
+    <tr th:each="app : ${aplicaciones}">
+        <td th:text="${app.candidato.firstName} + ' ' + ${app.candidato.lastName}"></td>
+        <td th:text="${app.candidato.email}"></td>
+        <td th:text="${app.estado}"></td>
+
+        <td>
+            <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/aceptar'}">Aceptar</a>
+            <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/rechazar'}">Rechazar</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
