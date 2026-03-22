@@ -89,7 +89,7 @@ public class CandidatoController {
             return "redirect:/candidato/login";
         }
 
-        var puestos = puestoRepository.findAll();
+        var puestos = puestoRepository.findByActiveTrue();
 
         List<Map.Entry<Puesto, Double>> matches = new ArrayList<>();
 
