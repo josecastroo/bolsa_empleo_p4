@@ -4,10 +4,12 @@ import com.example.bolsa_empleo.model.Candidato;
 import com.example.bolsa_empleo.model.Caracteristica;
 import com.example.bolsa_empleo.model.CandidatoCaracteristica;
 import com.example.bolsa_empleo.model.Puesto;
+import com.example.bolsa_empleo.model.Aplicacion;
 import com.example.bolsa_empleo.repository.CandidatoRepository;
 import com.example.bolsa_empleo.repository.CaracteristicaRepository;
 import com.example.bolsa_empleo.repository.CandidatoCaracteristicaRepository;
 import com.example.bolsa_empleo.repository.PuestoRepository;
+import com.example.bolsa_empleo.repository.AplicacionRepository;
 import com.example.bolsa_empleo.service.MatchingService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -26,18 +28,21 @@ public class CandidatoController {
     private final CaracteristicaRepository caracteristicaRepository;
     private final CandidatoCaracteristicaRepository candidatoCaracteristicaRepository;
     private final PuestoRepository puestoRepository;
+    private final AplicacionRepository aplicacionRepository;
     private final MatchingService matchingService;
 
     public CandidatoController(CandidatoRepository candidatoRepository,
                                CaracteristicaRepository caracteristicaRepository,
                                CandidatoCaracteristicaRepository candidatoCaracteristicaRepository,
                                PuestoRepository puestoRepository,
+                               AplicacionRepository aplicacionRepository,
                                MatchingService matchingService) {
         this.candidatoRepository = candidatoRepository;
         this.caracteristicaRepository = caracteristicaRepository;
         this.candidatoCaracteristicaRepository = candidatoCaracteristicaRepository;
         this.puestoRepository = puestoRepository;
         this.matchingService = matchingService;
+        this.aplicacionRepository = aplicacionRepository;
     }
 
     // registro
@@ -144,6 +149,30 @@ public class CandidatoController {
                 candidatoCaracteristicaRepository.save(cc);
             }
         }
+
+        return "redirect:/candidato/dashboard";
+    }
+
+    // aplicar a puesto
+    @GetMapping("/aplicar/{id}")
+    public String aplicar(@PathVariable Long id, HttpSession session) {
+
+        Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
+
+        if (candidato == null) {
+            return "redirect:/candidato/login";
+        }
+        Puesto puesto = puestoRepository.findById(id).orElse(null);
+
+        if (puesto == null) {
+            return "redirect:/candidato/dashboard";
+        }
+        Aplicacion app = new Aplicacion();
+        app.setCandidato(candidato);
+        app.setPuesto(puesto);
+        app.setEstado("PENDIENTE");
+        app.setDate(java.time.LocalDateTime.now());
+        aplicacionRepository.save(app);
 
         return "redirect:/candidato/dashboard";
     }

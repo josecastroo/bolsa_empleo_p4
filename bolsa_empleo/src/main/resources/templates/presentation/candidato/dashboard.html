@@ -24,6 +24,11 @@
         <td th:text="${entry.key.description}"></td>
         <td th:text="${entry.key.salary}"></td>
         <td th:text="${#numbers.formatDecimal(entry.value, 0, 2)} + '%'"></td>
+        <td>
+            <a th:href="@{'/candidato/aplicar/' + ${entry.key.id}}">
+                Aplicar
+            </a>
+        </td>
     </tr>
 </table>
 
