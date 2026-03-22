@@ -11,4 +11,6 @@ public interface AplicacionRepository extends JpaRepository<Aplicacion, Long> {
 
     List<Aplicacion> findByCandidato(Candidato candidato);
     List<Aplicacion> findByPuesto(Puesto puesto);
+
+    boolean existsByCandidatoAndPuesto(Candidato candidato, Puesto puesto);
 }

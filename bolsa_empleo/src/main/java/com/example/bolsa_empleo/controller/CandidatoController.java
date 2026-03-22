@@ -167,6 +167,13 @@ public class CandidatoController {
         if (puesto == null) {
             return "redirect:/candidato/dashboard";
         }
+        boolean yaExiste = aplicacionRepository
+                .existsByCandidatoAndPuesto(candidato, puesto);
+
+        if (yaExiste) {
+            return "redirect:/candidato/dashboard?yaAplico";
+        }
+
         Aplicacion app = new Aplicacion();
         app.setCandidato(candidato);
         app.setPuesto(puesto);
@@ -174,7 +181,7 @@ public class CandidatoController {
         app.setDate(java.time.LocalDateTime.now());
         aplicacionRepository.save(app);
 
-        return "redirect:/candidato/dashboard";
+        return "redirect:/candidato/dashboard?success";
     }
 
     // ver estado de aplicaciones
