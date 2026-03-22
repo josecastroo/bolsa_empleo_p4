@@ -3,15 +3,20 @@ package com.example.bolsa_empleo.controller;
 import com.example.bolsa_empleo.model.Candidato;
 import com.example.bolsa_empleo.model.Caracteristica;
 import com.example.bolsa_empleo.model.CandidatoCaracteristica;
+import com.example.bolsa_empleo.model.Puesto;
 import com.example.bolsa_empleo.repository.CandidatoRepository;
 import com.example.bolsa_empleo.repository.CaracteristicaRepository;
 import com.example.bolsa_empleo.repository.CandidatoCaracteristicaRepository;
+import com.example.bolsa_empleo.repository.PuestoRepository;
+import com.example.bolsa_empleo.service.MatchingService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/candidato")
@@ -20,13 +25,19 @@ public class CandidatoController {
     private final CandidatoRepository candidatoRepository;
     private final CaracteristicaRepository caracteristicaRepository;
     private final CandidatoCaracteristicaRepository candidatoCaracteristicaRepository;
+    private final PuestoRepository puestoRepository;
+    private final MatchingService matchingService;
 
     public CandidatoController(CandidatoRepository candidatoRepository,
                                CaracteristicaRepository caracteristicaRepository,
-                               CandidatoCaracteristicaRepository candidatoCaracteristicaRepository) {
+                               CandidatoCaracteristicaRepository candidatoCaracteristicaRepository,
+                               PuestoRepository puestoRepository,
+                               MatchingService matchingService) {
         this.candidatoRepository = candidatoRepository;
         this.caracteristicaRepository = caracteristicaRepository;
         this.candidatoCaracteristicaRepository = candidatoCaracteristicaRepository;
+        this.puestoRepository = puestoRepository;
+        this.matchingService = matchingService;
     }
 
     // registro
@@ -73,7 +84,21 @@ public class CandidatoController {
             return "redirect:/candidato/login";
         }
 
+        var puestos = puestoRepository.findAll();
+
+        List<Map.Entry<Puesto, Double>> matches = new ArrayList<>();
+
+        for (Puesto p : puestos) {
+            double score = matchingService.calcularMatch(p, candidato);
+
+            if (score > 0) {
+                matches.add(Map.entry(p, score));
+            }
+        }
+        matches.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
         model.addAttribute("candidato", candidato);
+        model.addAttribute("matches", matches);
 
         return "presentation/candidato/dashboard";
     }

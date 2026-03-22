@@ -1,15 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Dashboard Candidato</title>
 </head>
-
 <body>
-    <h2>Dashboard Candidato</h2>
-    <h3 th:text="'Bienvenido ' + ${candidato.firstName}"></h3>
-    <a href="/candidato/habilidades">Agregar habilidades</a>
-</body>
 
+<h2>Dashboard Candidato</h2>
+
+<h3 th:text="'Bienvenido ' + ${candidato.firstName}"></h3>
+
+<a href="/candidato/habilidades">Agregar habilidades</a>
+
+<h2>Mis oportunidades</h2>
+
+<table border="1">
+    <tr>
+        <th>Puesto</th>
+        <th>Salario</th>
+        <th>Match %</th>
+    </tr>
+
+    <tr th:each="entry : ${matches}">
+        <td th:text="${entry.key.description}"></td>
+        <td th:text="${entry.key.salary}"></td>
+        <td th:text="${#numbers.formatDecimal(entry.value, 0, 2)} + '%'"></td>
+    </tr>
+</table>
+
+</body>
 </html>
