@@ -4,7 +4,9 @@ import com.example.bolsa_empleo.model.*;
 import com.example.bolsa_empleo.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MatchingService {
@@ -26,16 +28,20 @@ public class MatchingService {
         List<CandidatoCaracteristica> skills =
                 candidatoCaracteristicaRepository.findByCandidato(candidato);
 
-        if (reqs.isEmpty()) return 0;
+        if (reqs == null || reqs.isEmpty()) return 0;
 
         int cumple = 0;
+        Set<Long> yaContadas = new HashSet<>();
 
         for (PuestoCaracteristica req : reqs) {
             for (CandidatoCaracteristica skill : skills) {
-                if (req.getCaracteristica().getId() == skill.getCaracteristica().getId()) {
+                Long idReq = req.getCaracteristica().getId();
+                Long idSkill = skill.getCaracteristica().getId();
 
+                if (idReq.equals(idSkill) && !yaContadas.contains(idReq)) {
                     if (skill.getLevel() >= req.getRequiredLevel()) {
                         cumple++;
+                        yaContadas.add(idReq);
                     }
                 }
             }

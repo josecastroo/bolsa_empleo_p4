@@ -101,7 +101,6 @@ public class CandidatoController {
             }
         }
         matches.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
-
         model.addAttribute("candidato", candidato);
         model.addAttribute("matches", matches);
 
@@ -141,12 +140,24 @@ public class CandidatoController {
                         .findById(caracteristicaIds.get(i))
                         .orElse(null);
 
-                CandidatoCaracteristica cc = new CandidatoCaracteristica();
-                cc.setCandidato(candidato);
-                cc.setCaracteristica(c);
-                cc.setLevel(niveles.get(i));
+                if (c == null) continue;
 
-                candidatoCaracteristicaRepository.save(cc);
+                CandidatoCaracteristica existente =
+                        candidatoCaracteristicaRepository
+                                .findByCandidatoAndCaracteristica(candidato, c)
+                                .orElse(null);
+
+                if (existente != null) {
+                    existente.setLevel(niveles.get(i));
+                    candidatoCaracteristicaRepository.save(existente);
+                } else {
+                    CandidatoCaracteristica cc = new CandidatoCaracteristica();
+                    cc.setCandidato(candidato);
+                    cc.setCaracteristica(c);
+                    cc.setLevel(niveles.get(i));
+
+                    candidatoCaracteristicaRepository.save(cc);
+                }
             }
         }
 
@@ -166,6 +177,10 @@ public class CandidatoController {
 
         if (puesto == null) {
             return "redirect:/candidato/dashboard";
+        }
+
+        if (!puesto.isActive()) {
+            return "redirect:/candidato/dashboard?inactivo";
         }
         boolean yaExiste = aplicacionRepository
                 .existsByCandidatoAndPuesto(candidato, puesto);
