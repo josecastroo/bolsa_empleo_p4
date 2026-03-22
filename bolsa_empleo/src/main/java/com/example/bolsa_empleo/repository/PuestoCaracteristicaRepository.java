@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PuestoCaracteristicaRepository extends JpaRepository<PuestoCaracteristica, Long>{
-    List<PuestoCaracteristicaRepository> findByPuestoId(Long puestoId);
+    List<PuestoCaracteristica> findByPuestoId(Long puestoId);
 }
