@@ -76,10 +76,6 @@ public class EmpresaController {
 
         if (empresaOpt.isPresent()) {
             Empresa empresa = empresaOpt.get();
-
-            if (!empresa.isApproved()) {
-                return "redirect:/empresa/login?notApproved";
-            }
             session.setAttribute("empresaLogueada", empresa);
             return "redirect:/empresa/dashboard";
         }
@@ -125,6 +121,11 @@ public class EmpresaController {
         if (empresa == null) {
             return "redirect:/empresa/login";
         }
+
+        if (!empresa.isApproved()) {
+            return "redirect:/empresa/dashboard?notApproved";
+        }
+
         puesto.setEmpresa(empresa);
         puesto.setActive(true);
         puesto.setCreatedAt(java.time.LocalDateTime.now());
@@ -160,6 +161,11 @@ public class EmpresaController {
         if (puesto == null) {
             return "redirect:/empresa/dashboard";
         }
+
+        if (!(puesto.getEmpresa().getId() == empresa.getId())) {
+            return "redirect:/empresa/dashboard";
+        }
+
         var candidatos = candidatoRepository.findAll();
         List<Map.Entry<Candidato, Double>> matches = new ArrayList<>();
 
@@ -192,6 +198,11 @@ public class EmpresaController {
         if (puesto == null) {
             return "redirect:/empresa/dashboard";
         }
+
+        if (!(puesto.getEmpresa().getId() == empresa.getId())) {
+            return "redirect:/empresa/dashboard";
+        }
+
         var aplicaciones = aplicacionRepository.findByPuesto(puesto);
         model.addAttribute("puesto", puesto);
         model.addAttribute("aplicaciones", aplicaciones);

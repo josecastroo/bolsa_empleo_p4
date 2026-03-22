@@ -9,6 +9,10 @@
 <body>
   <h2 th:text="'Bienvenido ' + ${empresa.name}"></h2>
 
+  <p th:if="${!empresa.approved}" style="color:red">
+    Tu cuenta está pendiente de aprobación
+  </p>
+
   <h3>Mis puestos</h3>
 
   <table border="1">
