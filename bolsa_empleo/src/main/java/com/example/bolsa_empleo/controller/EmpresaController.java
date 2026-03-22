@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -151,28 +151,28 @@ public class EmpresaController {
                                 Model model) {
 
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
-
         if (empresa == null) {
             return "redirect:/empresa/login";
         }
 
         Puesto puesto = puestoRepository.findById(id).orElse(null);
 
+        if (puesto == null) {
+            return "redirect:/empresa/dashboard";
+        }
         var candidatos = candidatoRepository.findAll();
-
-        Map<Candidato, Double> matches = new HashMap<>();
+        List<Map.Entry<Candidato, Double>> matches = new ArrayList<>();
 
         for (Candidato c : candidatos) {
             double score = matchingService.calcularMatch(puesto, c);
 
             if (score > 0) {
-                matches.put(c, score);
+                matches.add(Map.entry(c, score));
             }
         }
-
+        matches.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
         model.addAttribute("puesto", puesto);
         model.addAttribute("matches", matches);
-
         return "presentation/empresa/candidatos";
     }
 }

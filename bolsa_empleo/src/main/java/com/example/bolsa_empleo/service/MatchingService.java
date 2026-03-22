@@ -32,7 +32,6 @@ public class MatchingService {
 
         for (PuestoCaracteristica req : reqs) {
             for (CandidatoCaracteristica skill : skills) {
-
                 if (req.getCaracteristica().getId() == skill.getCaracteristica().getId()) {
 
                     if (skill.getLevel() >= req.getRequiredLevel()) {
@@ -41,7 +40,6 @@ public class MatchingService {
                 }
             }
         }
-
         return (double) cumple / reqs.size() * 100;
     }
 }
