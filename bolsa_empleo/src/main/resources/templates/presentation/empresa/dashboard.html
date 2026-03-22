@@ -24,6 +24,11 @@
       <td th:text="${p.description}"></td>
       <td th:text="${p.salary}"></td>
       <td th:text="${p.type}"></td>
+      <td>
+        <a th:href="@{'/empresa/puesto/' + ${p.id} + '/candidatos'}">
+          Ver candidatos
+        </a>
+      </td>
     </tr>
   </table>
   <a href="/empresa/puesto/nuevo">Crear Puesto</a>

@@ -4,16 +4,21 @@ import com.example.bolsa_empleo.model.Empresa;
 import com.example.bolsa_empleo.model.Puesto;
 import com.example.bolsa_empleo.model.Caracteristica;
 import com.example.bolsa_empleo.model.PuestoCaracteristica;
+import com.example.bolsa_empleo.model.Candidato;
 import com.example.bolsa_empleo.repository.CaracteristicaRepository;
 import com.example.bolsa_empleo.repository.EmpresaRepository;
 import com.example.bolsa_empleo.repository.PuestoRepository;
 import com.example.bolsa_empleo.repository.PuestoCaracteristicaRepository;
+import com.example.bolsa_empleo.repository.CandidatoRepository;
+import com.example.bolsa_empleo.service.MatchingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/empresa")
@@ -23,15 +28,21 @@ public class EmpresaController {
     private final PuestoRepository puestoRepository;
     private final CaracteristicaRepository caracteristicaRepository;
     private final PuestoCaracteristicaRepository puestoCaracteristicaRepository;
+    private final CandidatoRepository candidatoRepository;
+    private final MatchingService matchingService;
 
     public EmpresaController(EmpresaRepository empresaRepository,
                              PuestoRepository puestoRepository,
                              CaracteristicaRepository caracteristicaRepository,
-                             PuestoCaracteristicaRepository puestoCaracteristicaRepository) {
+                             PuestoCaracteristicaRepository puestoCaracteristicaRepository,
+                             CandidatoRepository candidatoRepository,
+                             MatchingService matchingService) {
         this.empresaRepository = empresaRepository;
         this.puestoRepository = puestoRepository;
         this.caracteristicaRepository = caracteristicaRepository;
         this.puestoCaracteristicaRepository = puestoCaracteristicaRepository;
+        this.candidatoRepository = candidatoRepository;
+        this.matchingService = matchingService;
     }
 
     // mostrar form
@@ -132,5 +143,36 @@ public class EmpresaController {
             }
         }
         return "redirect:/empresa/dashboard";
+    }
+
+    @GetMapping("/puesto/{id}/candidatos")
+    public String verCandidatos(@PathVariable Long id,
+                                HttpSession session,
+                                Model model) {
+
+        Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
+
+        if (empresa == null) {
+            return "redirect:/empresa/login";
+        }
+
+        Puesto puesto = puestoRepository.findById(id).orElse(null);
+
+        var candidatos = candidatoRepository.findAll();
+
+        Map<Candidato, Double> matches = new HashMap<>();
+
+        for (Candidato c : candidatos) {
+            double score = matchingService.calcularMatch(puesto, c);
+
+            if (score > 0) {
+                matches.put(c, score);
+            }
+        }
+
+        model.addAttribute("puesto", puesto);
+        model.addAttribute("matches", matches);
+
+        return "presentation/empresa/candidatos";
     }
 }

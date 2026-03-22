@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Candidatos</title>
+</head>
+<body>
+
+<h2 th:text="'Candidatos para: ' + ${puesto.description}"></h2>
+
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Match %</th>
+    </tr>
+
+    <tr th:each="entry : ${matches}">
+        <td th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></td>
+        <td th:text="${entry.key.email}"></td>
+        <td th:text="${entry.value} + '%'"></td>
+    </tr>
+</table>
+
+</body>
+</html>
