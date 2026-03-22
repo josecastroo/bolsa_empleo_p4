@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Aplicaciones</title>
+</head>
+<body>
+
+<h2>Mis Aplicaciones</h2>
+
+<table border="1">
+    <tr>
+        <th>Puesto</th>
+        <th>Empresa</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+    </tr>
+
+    <tr th:each="app : ${aplicaciones}">
+        <td th:text="${app.puesto.description}"></td>
+        <td th:text="${app.puesto.empresa.name}"></td>
+        <td th:text="${app.estado}"></td>
+        <td th:text="${app.date}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

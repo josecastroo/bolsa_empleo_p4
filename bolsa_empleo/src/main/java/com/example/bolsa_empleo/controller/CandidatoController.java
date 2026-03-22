@@ -176,4 +176,18 @@ public class CandidatoController {
 
         return "redirect:/candidato/dashboard";
     }
+
+    // ver estado de aplicaciones
+    @GetMapping("/aplicaciones")
+    public String verAplicaciones(HttpSession session, Model model) {
+
+        Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
+
+        if (candidato == null) {
+            return "redirect:/candidato/login";
+        }
+        var aplicaciones = aplicacionRepository.findByCandidato(candidato);
+        model.addAttribute("aplicaciones", aplicaciones);
+        return "presentation/candidato/aplicaciones";
+    }
 }
