@@ -34,5 +34,13 @@
     </tr>
 </table>
 
+<p th:if="${param.yaAplico}" style="color:red">
+    Ya aplicaste a este puesto
+</p>
+
+<p th:if="${param.success}" style="color:green">
+    Aplicación enviada correctamente
+</p>
+
 </body>
 </html>
