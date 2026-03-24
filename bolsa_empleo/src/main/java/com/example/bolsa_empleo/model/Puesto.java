@@ -18,7 +18,10 @@ public class Puesto {
     private String description;
 
     private double salary;
-    private String type;
+
+    @Enumerated(EnumType.STRING)
+    private TipoPuesto type;
+
     private boolean active;
     private LocalDateTime createdAt;
 
@@ -54,11 +57,11 @@ public class Puesto {
         this.salary = salary;
     }
 
-    public String getType() {
+    public TipoPuesto getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TipoPuesto type) {
         this.type = type;
     }
 
