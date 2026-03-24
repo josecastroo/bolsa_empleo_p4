@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+
+<h2>Iniciar sesión</h2>
+
+<div th:if="${param.error}">
+    <p style="color:red;">Credenciales incorrectas</p>
+</div>
+
+<div th:if="${param.notApproved}">
+    <p style="color:orange;">Empresa pendiente de aprobación</p>
+</div>
+
+<div th:if="${param.logout}">
+    <p style="color:green;">Sesión cerrada</p>
+</div>
+
+<hr>
+
+<form th:action="@{/login}" method="post">
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Contraseña:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Tipo de usuario:</label><br>
+    <select name="tipo" required>
+        <option value="">-- Seleccionar --</option>
+        <option value="candidato">Candidato</option>
+        <option value="empresa">Empresa</option>
+    </select><br><br>
+
+    <button type="submit">Entrar</button>
+
+</form>
+
+<hr>
+
+<h3>¿No tienes cuenta?</h3>
+
+<p>
+    <a th:href="@{/candidato/registro}">Registrarse como Candidato</a>
+</p>
+
+<p>
+    <a th:href="@{/empresa/registro}">Registrarse como Empresa</a>
+</p>
+
+</body>
+</html>

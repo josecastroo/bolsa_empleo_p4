@@ -66,40 +66,13 @@ public class EmpresaController {
         return "redirect:/empresa/registro?success";
     }
 
-    // login
-    @GetMapping("/login")
-    public String mostrarLogin() {
-        return "presentation/empresa/login";
-    }
-
-    @PostMapping("/login")
-    public String loginEmpresa(@RequestParam String email,
-                               @RequestParam String password,
-                               HttpSession session) {
-
-        var empresaOpt = empresaRepository.findByEmail(email);
-
-        if (empresaOpt.isPresent()) {
-            Empresa empresa = empresaOpt.get();
-
-            if (passwordEncoder.matches(password, empresa.getPassword())) {
-                if (!empresa.isApproved()) {
-                    return "redirect:/empresa/login?notApproved";
-                }
-                session.setAttribute("empresaLogueada", empresa);
-                return "redirect:/empresa/dashboard";
-            }
-        }
-        return "redirect:/empresa/login?error";
-    }
-
     // dashboard
     @GetMapping("/dashboard")
     public String dashboardEmpresa(HttpSession session, Model model) {
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
-            return "redirect:/empresa/login";
+            return "redirect:/login";
         }
         var puestos = puestoRepository.findByEmpresaId(empresa.getId());
         model.addAttribute("empresa", empresa);
@@ -113,7 +86,7 @@ public class EmpresaController {
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
-            return "redirect:/empresa/login";
+            return "redirect:/login";
         }
         model.addAttribute("puesto", new Puesto());
         model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
@@ -130,7 +103,7 @@ public class EmpresaController {
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
-            return "redirect:/empresa/login";
+            return "redirect:/login";
         }
 
         if (!empresa.isApproved()) {
@@ -164,7 +137,7 @@ public class EmpresaController {
 
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
         if (empresa == null) {
-            return "redirect:/empresa/login";
+            return "redirect:/login";
         }
 
         Puesto puesto = puestoRepository.findById(id).orElse(null);
@@ -202,7 +175,7 @@ public class EmpresaController {
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
-            return "redirect:/empresa/login";
+            return "redirect:/login";
         }
         Puesto puesto = puestoRepository.findById(id).orElse(null);
 

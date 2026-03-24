@@ -65,31 +65,7 @@ public class CandidatoController {
 
         candidato.setPassword(passwordEncoder.encode(candidato.getPassword()));
         candidatoRepository.save(candidato);
-        return "redirect:/candidato/login";
-    }
-
-    // login
-    @GetMapping("/login")
-    public String mostrarLogin() {
-        return "presentation/candidato/login";
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String email,
-                        @RequestParam String password,
-                        HttpSession session) {
-
-        var candidatoOpt = candidatoRepository.findByEmail(email);
-
-        if (candidatoOpt.isPresent()) {
-            Candidato c = candidatoOpt.get();
-
-            if (passwordEncoder.matches(password, c.getPassword())) {
-                session.setAttribute("candidatoLogueado", c);
-                return "redirect:/candidato/dashboard";
-            }
-        }
-        return "redirect:/candidato/login?error";
+        return "redirect:/login";
     }
 
     // dashboard
@@ -99,7 +75,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
 
         var puestos = puestoRepository.findByActiveTrue();
@@ -127,7 +103,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
 
         model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
@@ -143,7 +119,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
 
         if (caracteristicaIds != null && niveles != null) {
@@ -184,7 +160,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
         Puesto puesto = puestoRepository.findById(id).orElse(null);
 
@@ -219,7 +195,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
         var aplicaciones = aplicacionRepository.findByCandidato(candidato);
         model.addAttribute("aplicaciones", aplicaciones);
@@ -233,7 +209,7 @@ public class CandidatoController {
         Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
 
         if (candidato == null) {
-            return "redirect:/candidato/login";
+            return "redirect:/login";
         }
 
         if (file.isEmpty()) {
