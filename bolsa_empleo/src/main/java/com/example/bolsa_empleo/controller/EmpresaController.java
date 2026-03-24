@@ -8,6 +8,7 @@ import com.example.bolsa_empleo.repository.PuestoCaracteristicaRepository;
 import com.example.bolsa_empleo.repository.CandidatoRepository;
 import com.example.bolsa_empleo.repository.AplicacionRepository;
 import com.example.bolsa_empleo.service.MatchingService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class EmpresaController {
     private final CandidatoRepository candidatoRepository;
     private final AplicacionRepository aplicacionRepository;
     private final MatchingService matchingService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public EmpresaController(EmpresaRepository empresaRepository,
                              PuestoRepository puestoRepository,
@@ -35,7 +37,8 @@ public class EmpresaController {
                              PuestoCaracteristicaRepository puestoCaracteristicaRepository,
                              CandidatoRepository candidatoRepository,
                              AplicacionRepository aplicacionRepository,
-                             MatchingService matchingService) {
+                             MatchingService matchingService,
+                             BCryptPasswordEncoder passwordEncoder) {
         this.empresaRepository = empresaRepository;
         this.puestoRepository = puestoRepository;
         this.caracteristicaRepository = caracteristicaRepository;
@@ -43,6 +46,7 @@ public class EmpresaController {
         this.candidatoRepository = candidatoRepository;
         this.aplicacionRepository = aplicacionRepository;
         this.matchingService = matchingService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // mostrar form
@@ -56,6 +60,7 @@ public class EmpresaController {
     @PostMapping("/registro")
     public String registrarEmpresa(@ModelAttribute Empresa empresa) {
 
+        empresa.setPassword(passwordEncoder.encode(empresa.getPassword()));
         empresa.setApproved(false); // pendiente de aprobación
         empresaRepository.save(empresa);
         return "redirect:/empresa/registro?success";
@@ -72,12 +77,18 @@ public class EmpresaController {
                                @RequestParam String password,
                                HttpSession session) {
 
-        var empresaOpt = empresaRepository.findByEmailAndPassword(email, password);
+        var empresaOpt = empresaRepository.findByEmail(email);
 
         if (empresaOpt.isPresent()) {
             Empresa empresa = empresaOpt.get();
-            session.setAttribute("empresaLogueada", empresa);
-            return "redirect:/empresa/dashboard";
+
+            if (passwordEncoder.matches(password, empresa.getPassword())) {
+                if (!empresa.isApproved()) {
+                    return "redirect:/empresa/login?notApproved";
+                }
+                session.setAttribute("empresaLogueada", empresa);
+                return "redirect:/empresa/dashboard";
+            }
         }
         return "redirect:/empresa/login?error";
     }

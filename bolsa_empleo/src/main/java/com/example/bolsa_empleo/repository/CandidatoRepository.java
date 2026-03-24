@@ -8,8 +8,5 @@ import java.util.Optional;
 public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
 
     Optional<Candidato> findByEmail(String email);
-
-    Optional<Candidato> findByEmailAndPassword(String email, String password);
-
     Optional<Candidato> existsByEmail(String email);
 }

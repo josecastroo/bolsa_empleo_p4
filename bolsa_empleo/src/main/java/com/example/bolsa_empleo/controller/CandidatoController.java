@@ -14,6 +14,7 @@ import com.example.bolsa_empleo.service.MatchingService;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,19 +35,22 @@ public class CandidatoController {
     private final PuestoRepository puestoRepository;
     private final AplicacionRepository aplicacionRepository;
     private final MatchingService matchingService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public CandidatoController(CandidatoRepository candidatoRepository,
                                CaracteristicaRepository caracteristicaRepository,
                                CandidatoCaracteristicaRepository candidatoCaracteristicaRepository,
                                PuestoRepository puestoRepository,
                                AplicacionRepository aplicacionRepository,
-                               MatchingService matchingService) {
+                               MatchingService matchingService,
+                               BCryptPasswordEncoder passwordEncoder) {
         this.candidatoRepository = candidatoRepository;
         this.caracteristicaRepository = caracteristicaRepository;
         this.candidatoCaracteristicaRepository = candidatoCaracteristicaRepository;
         this.puestoRepository = puestoRepository;
         this.matchingService = matchingService;
         this.aplicacionRepository = aplicacionRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // registro
@@ -58,6 +62,8 @@ public class CandidatoController {
 
     @PostMapping("/registro")
     public String registrar(@ModelAttribute Candidato candidato) {
+
+        candidato.setPassword(passwordEncoder.encode(candidato.getPassword()));
         candidatoRepository.save(candidato);
         return "redirect:/candidato/login";
     }
@@ -73,13 +79,16 @@ public class CandidatoController {
                         @RequestParam String password,
                         HttpSession session) {
 
-        var candidatoOpt = candidatoRepository.findByEmailAndPassword(email, password);
+        var candidatoOpt = candidatoRepository.findByEmail(email);
 
         if (candidatoOpt.isPresent()) {
-            session.setAttribute("candidatoLogueado", candidatoOpt.get());
-            return "redirect:/candidato/dashboard";
-        }
+            Candidato c = candidatoOpt.get();
 
+            if (passwordEncoder.matches(password, c.getPassword())) {
+                session.setAttribute("candidatoLogueado", c);
+                return "redirect:/candidato/dashboard";
+            }
+        }
         return "redirect:/candidato/login?error";
     }
 
