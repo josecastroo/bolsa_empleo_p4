@@ -218,4 +218,26 @@ public class EmpresaController {
         }
         return "redirect:/empresa/dashboard";
     }
+
+    // desactivar puesto
+    @GetMapping("/puesto/{id}/toggle")
+    public String togglePuesto(@PathVariable Long id, HttpSession session) {
+
+        Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
+
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Puesto puesto = puestoRepository.findById(id).orElse(null);
+
+        if (puesto == null) {
+            return "redirect:/empresa/dashboard";
+        }
+        if (!(puesto.getEmpresa().getId() == empresa.getId())) {
+            return "redirect:/empresa/dashboard";
+        }
+        puesto.setActive(!puesto.isActive());
+        puestoRepository.save(puesto);
+        return "redirect:/empresa/dashboard";
+    }
 }

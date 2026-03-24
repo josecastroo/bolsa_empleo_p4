@@ -21,6 +21,8 @@
       <th>Descripción</th>
       <th>Salario</th>
       <th>Tipo</th>
+      <th>Estado</th>
+      <th>Acción</th>
     </tr>
 
     <tr th:each="p : ${puestos}">
@@ -28,6 +30,13 @@
       <td th:text="${p.description}"></td>
       <td th:text="${p.salary}"></td>
       <td th:text="${p.type}"></td>
+      <td th:text="${p.active} ? 'Activo' : 'Inactivo'"></td>
+
+      <td>
+        <a th:href="@{'/empresa/puesto/' + ${p.id} + '/toggle'}">
+          <span th:text="${p.active} ? 'Desactivar' : 'Activar'"></span>
+        </a>
+      </td>
       <td>
         <a th:href="@{'/empresa/puesto/' + ${p.id} + '/candidatos'}">
           Ver candidatos
