@@ -11,11 +11,15 @@ import com.example.bolsa_empleo.repository.CandidatoCaracteristicaRepository;
 import com.example.bolsa_empleo.repository.PuestoRepository;
 import com.example.bolsa_empleo.repository.AplicacionRepository;
 import com.example.bolsa_empleo.service.MatchingService;
+
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -211,5 +215,37 @@ public class CandidatoController {
         var aplicaciones = aplicacionRepository.findByCandidato(candidato);
         model.addAttribute("aplicaciones", aplicaciones);
         return "presentation/candidato/aplicaciones";
+    }
+
+    @PostMapping("/cv")
+    public String subirCV(@RequestParam("file") MultipartFile file,
+                          HttpSession session) throws Exception {
+
+        Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
+
+        if (candidato == null) {
+            return "redirect:/candidato/login";
+        }
+
+        if (file.isEmpty()) {
+            return "redirect:/candidato/dashboard?error";
+        }
+
+        String carpeta = System.getProperty("user.dir") + "/uploads/";
+
+        String original = file.getOriginalFilename();
+        if (original == null) original = "cv.pdf";
+
+        String nombreArchivo = candidato.getId() + "_" + original;
+
+        File destino = new File(carpeta + nombreArchivo);
+        destino.getParentFile().mkdirs();
+
+        file.transferTo(destino);
+
+        candidato.setCvPath(nombreArchivo);
+        candidatoRepository.save(candidato);
+
+        return "redirect:/candidato/dashboard?cvOk";
     }
 }

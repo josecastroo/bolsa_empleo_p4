@@ -13,6 +13,7 @@
         <th>Email</th>
         <th>Estado</th>
         <th>Acción</th>
+        <th>CV</th>
     </tr>
 
     <tr th:each="app : ${aplicaciones}">
@@ -24,6 +25,18 @@
             <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/aceptar'}">Aceptar</a>
             <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/rechazar'}">Rechazar</a>
         </td>
+        <td>
+            <a th:if="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}"
+               th:href="@{'/uploads/' + ${app.candidato.cvPath}}"
+               target="_blank">
+                Ver CV
+            </a>
+
+            <span th:unless="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}">
+        Sin CV
+    </span>
+        </td>
+    </tr>
     </tr>
 </table>
 

@@ -34,6 +34,11 @@
     </tr>
 </table>
 
+<form th:action="@{/candidato/cv}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="application/pdf" required>
+    <button type="submit">Registrar CV</button>
+</form>
+
 <p th:if="${param.yaAplico}" style="color:red">
     Ya aplicaste a este puesto
 </p>

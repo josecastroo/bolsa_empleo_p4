@@ -14,13 +14,11 @@
         <th>Email</th>
         <th>Match %</th>
     </tr>
-
     <tr th:each="entry, iter : ${matches}">
         <td th:text="${iter.index + 1}"></td>
         <td th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></td>
         <td th:text="${entry.key.email}"></td>
         <td th:text="${#numbers.formatDecimal(entry.value, 1, 2)} + '%'"></td>
-    </tr>
 </table>
 
 </body>
