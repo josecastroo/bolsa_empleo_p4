@@ -1,12 +1,7 @@
 package com.example.bolsa_empleo.controller;
 
 import com.example.bolsa_empleo.model.*;
-import com.example.bolsa_empleo.repository.CaracteristicaRepository;
-import com.example.bolsa_empleo.repository.EmpresaRepository;
-import com.example.bolsa_empleo.repository.PuestoRepository;
-import com.example.bolsa_empleo.repository.PuestoCaracteristicaRepository;
-import com.example.bolsa_empleo.repository.CandidatoRepository;
-import com.example.bolsa_empleo.repository.AplicacionRepository;
+import com.example.bolsa_empleo.repository.*;
 import com.example.bolsa_empleo.service.MatchingService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,6 +22,7 @@ public class EmpresaController {
     private final CaracteristicaRepository caracteristicaRepository;
     private final PuestoCaracteristicaRepository puestoCaracteristicaRepository;
     private final CandidatoRepository candidatoRepository;
+    private final CandidatoCaracteristicaRepository candidatoCaracteristicaRepository;
     private final AplicacionRepository aplicacionRepository;
     private final MatchingService matchingService;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -36,6 +32,7 @@ public class EmpresaController {
                              CaracteristicaRepository caracteristicaRepository,
                              PuestoCaracteristicaRepository puestoCaracteristicaRepository,
                              CandidatoRepository candidatoRepository,
+                             CandidatoCaracteristicaRepository candidatoCaracteristicaRepository,
                              AplicacionRepository aplicacionRepository,
                              MatchingService matchingService,
                              BCryptPasswordEncoder passwordEncoder) {
@@ -44,6 +41,7 @@ public class EmpresaController {
         this.caracteristicaRepository = caracteristicaRepository;
         this.puestoCaracteristicaRepository = puestoCaracteristicaRepository;
         this.candidatoRepository = candidatoRepository;
+        this.candidatoCaracteristicaRepository = candidatoCaracteristicaRepository;
         this.aplicacionRepository = aplicacionRepository;
         this.matchingService = matchingService;
         this.passwordEncoder = passwordEncoder;
@@ -132,12 +130,13 @@ public class EmpresaController {
 
     @GetMapping("/puesto/{id}/candidatos")
     public String verCandidatos(@PathVariable Long id,
+                                @RequestParam(required = false) String keyword,
                                 HttpSession session,
                                 Model model) {
 
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
         if (empresa == null) {
-            return "redirect:/login";
+            return "redirect:/empresa/login";
         }
 
         Puesto puesto = puestoRepository.findById(id).orElse(null);
@@ -151,19 +150,55 @@ public class EmpresaController {
         }
 
         var candidatos = candidatoRepository.findAll();
+
         List<Map.Entry<Candidato, Double>> matches = new ArrayList<>();
 
         for (Candidato c : candidatos) {
+            if (keyword != null && !keyword.isEmpty()) {
+                String nombre = (c.getFirstName() + " " + c.getLastName()).toLowerCase();
+
+                if (!nombre.contains(keyword.toLowerCase())) {
+                    continue;
+                }
+            }
             double score = matchingService.calcularMatch(puesto, c);
 
             if (score > 0) {
                 matches.add(Map.entry(c, score));
             }
         }
+
         matches.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
         model.addAttribute("puesto", puesto);
         model.addAttribute("matches", matches);
+
         return "presentation/empresa/candidatos";
+    }
+
+    @GetMapping("/candidato/{id}")
+    public String verCandidato(@PathVariable Long id,
+                               HttpSession session,
+                               Model model) {
+
+        Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
+
+        if (empresa == null) {
+            return "redirect:/empresa/login";
+        }
+
+        Candidato candidato = candidatoRepository.findById(id).orElse(null);
+
+        if (candidato == null) {
+            return "redirect:/empresa/dashboard";
+        }
+
+        var habilidades = candidatoCaracteristicaRepository.findByCandidato(candidato);
+
+        model.addAttribute("candidato", candidato);
+        model.addAttribute("habilidades", habilidades);
+
+        return "presentation/empresa/candidato_detalle";
     }
 
     // empresa ve aplicacion del candidato

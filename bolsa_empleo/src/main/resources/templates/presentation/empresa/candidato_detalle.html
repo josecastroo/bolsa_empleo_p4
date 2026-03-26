@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle Candidato</title>
+</head>
+<body>
+
+<h2>Detalle del Candidato</h2>
+
+<h3>Información Personal</h3>
+
+<p>
+    <b>Identificación:</b>
+    <span th:text="${candidato.identification}"></span>
+</p>
+
+<p>
+    <b>Nombre:</b>
+    <span th:text="${candidato.firstName} + ' ' + ${candidato.lastName}"></span>
+</p>
+
+<p>
+    <b>Nacionalidad:</b>
+    <span th:text="${candidato.nationality}"></span>
+</p>
+
+<p>
+    <b>Teléfono:</b>
+    <span th:text="${candidato.phone}"></span>
+</p>
+
+<p>
+    <b>Email:</b>
+    <span th:text="${candidato.email}"></span>
+</p>
+
+<p>
+    <b>Residencia:</b>
+    <span th:text="${candidato.residence}"></span>
+</p>
+
+<hr>
+
+<h3>Habilidades</h3>
+
+<ul>
+    <li th:each="h : ${habilidades}">
+        <span th:text="${h.caracteristica.name}"></span>
+        -
+        Nivel:
+        <span th:text="${h.level}"></span>
+    </li>
+</ul>
+
+<hr>
+
+<h3>Currículum</h3>
+
+<a th:if="${candidato.cvPath != null}"
+   th:href="@{'/uploads/' + ${candidato.cvPath}}"
+   target="_blank">
+    Ver CV
+</a>
+
+<span th:if="${candidato.cvPath == null}">
+    No tiene CV
+</span>
+
+</body>
+</html>

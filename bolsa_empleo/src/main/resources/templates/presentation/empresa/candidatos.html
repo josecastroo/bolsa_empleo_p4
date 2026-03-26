@@ -19,7 +19,21 @@
         <td th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></td>
         <td th:text="${entry.key.email}"></td>
         <td th:text="${#numbers.formatDecimal(entry.value, 1, 2)} + '%'"></td>
+        <td>
+            <a th:href="@{'/empresa/candidato/' + ${entry.key.id}}">
+                Ver detalle
+            </a>
+        </td>
 </table>
 
+<h3>Buscar candidato</h3>
+
+<form method="get"
+      th:action="@{'/empresa/puesto/' + ${puesto.id} + '/candidatos'}">
+
+    <input type="text" name="keyword" placeholder="Nombre...">
+
+    <button type="submit">Buscar</button>
+</form>
 </body>
 </html>
