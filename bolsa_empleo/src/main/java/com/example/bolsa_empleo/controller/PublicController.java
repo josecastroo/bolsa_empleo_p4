@@ -1,15 +1,14 @@
 package com.example.bolsa_empleo.controller;
 
 import com.example.bolsa_empleo.model.Puesto;
-import com.example.bolsa_empleo.model.TipoPuesto;
 import com.example.bolsa_empleo.model.PuestoCaracteristica;
+import com.example.bolsa_empleo.repository.CaracteristicaRepository;
 import com.example.bolsa_empleo.repository.PuestoCaracteristicaRepository;
 import com.example.bolsa_empleo.repository.PuestoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +19,14 @@ public class PublicController {
 
     private final PuestoRepository puestoRepository;
     private final PuestoCaracteristicaRepository puestoCaracteristicaRepository;
+    private final CaracteristicaRepository caracteristicaRepository;
 
     public PublicController(PuestoRepository puestoRepository,
-                            PuestoCaracteristicaRepository puestoCaracteristicaRepository) {
+                            PuestoCaracteristicaRepository puestoCaracteristicaRepository,
+                            CaracteristicaRepository caracteristicaRepository) {
         this.puestoRepository = puestoRepository;
         this.puestoCaracteristicaRepository = puestoCaracteristicaRepository;
+        this.caracteristicaRepository = caracteristicaRepository;
     }
 
     @GetMapping("/")
@@ -41,21 +43,48 @@ public class PublicController {
 
         model.addAttribute("puestos", puestos);
         model.addAttribute("mapaCaracteristicas", mapa);
+        model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
 
         return "presentation/public/home";
     }
 
     @GetMapping("/buscar")
     public String buscar(@RequestParam(required = false) String keyword,
+                         @RequestParam(required = false) Long caracteristicaId,
                          Model model) {
 
-        var resultados = puestoRepository
-                .findByTypeAndActiveAndDescription(
-                        TipoPuesto.PUBLIC, true, keyword == null ? "" : keyword
-                );
+        List<Puesto> puestos = puestoRepository.findAll();
 
-        model.addAttribute("puestos", resultados);
+        if (keyword != null && !keyword.isEmpty()) {
+            puestos = puestos.stream()
+                    .filter(p -> p.getDescription().toLowerCase()
+                            .contains(keyword.toLowerCase()))
+                    .toList();
+        }
 
-        return "presentation/public/buscar";
+        if (caracteristicaId != null) {
+            puestos = puestos.stream()
+                    .filter(p -> {
+                        var pcs = puestoCaracteristicaRepository.findByPuesto(p);
+                        return pcs.stream().anyMatch(pc ->
+                                pc.getCaracteristica() != null &&
+                                        pc.getCaracteristica().getId() == caracteristicaId
+                        );
+                    })
+                    .toList();
+        }
+
+        Map<Long, List<PuestoCaracteristica>> mapa = new HashMap<>();
+
+        for (Puesto p : puestos) {
+            var lista = puestoCaracteristicaRepository.findByPuesto(p);
+            mapa.put(p.getId(), lista);
+        }
+
+        model.addAttribute("puestos", puestos);
+        model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
+        model.addAttribute("mapaCaracteristicas", mapa);
+
+        return "presentation/public/home";
     }
 }

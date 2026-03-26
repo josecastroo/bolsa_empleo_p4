@@ -21,6 +21,9 @@
 
 <h2>Últimos puestos</h2>
 
+<div th:if="${puestos == null or #lists.isEmpty(puestos)}">
+    <p>No se encontraron puestos con esos criterios.</p>
+</div>
 <div th:each="p : ${puestos}">
 
     <div class="card" style="border:1px solid black; padding:10px; margin:10px;">
@@ -30,7 +33,7 @@
         <p th:text="${p.empresa != null ? p.empresa.name : 'Sin empresa'}"></p>
 
         <span>Ver detalles</span>
-        
+
         <div class="detalle"
              th:if="${mapaCaracteristicas[p.id] != null}">
 
@@ -48,6 +51,24 @@
     </div>
 
 </div>
+
+<h2>Buscar puestos</h2>
+
+<form th:action="@{/buscar}" method="get">
+
+    <input type="text" name="keyword" placeholder="Buscar...">
+
+    <select name="caracteristicaId">
+        <option value="">-- Característica --</option>
+        <option th:each="c : ${caracteristicas}"
+                th:value="${c.id}"
+                th:text="${c.name}">
+        </option>
+    </select>
+
+    <button type="submit">Buscar</button>
+
+</form>
 
 </body>
 </html>
