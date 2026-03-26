@@ -204,14 +204,16 @@ public class EmpresaController {
     // empresa ve aplicacion del candidato
     @GetMapping("/puesto/{id}/aplicaciones")
     public String verAplicaciones(@PathVariable Long id,
+                                  @RequestParam(required = false) String keyword,
                                   HttpSession session,
                                   Model model) {
 
         Empresa empresa = (Empresa) session.getAttribute("empresaLogueada");
 
         if (empresa == null) {
-            return "redirect:/login";
+            return "redirect:/empresa/login";
         }
+
         Puesto puesto = puestoRepository.findById(id).orElse(null);
 
         if (puesto == null) {
@@ -222,9 +224,23 @@ public class EmpresaController {
             return "redirect:/empresa/dashboard";
         }
 
-        var aplicaciones = aplicacionRepository.findByPuesto(puesto);
+        var aplicaciones = aplicacionRepository.findByPuestoId(puesto.getId());
+
+        if (keyword != null && !keyword.isEmpty()) {
+            aplicaciones = aplicaciones.stream()
+                    .filter(app -> {
+                        var c = app.getCandidato();
+                        if (c == null) return false;
+
+                        String nombre = (c.getFirstName() + " " + c.getLastName()).toLowerCase();
+                        return nombre.contains(keyword.toLowerCase());
+                    })
+                    .toList();
+        }
+
         model.addAttribute("puesto", puesto);
         model.addAttribute("aplicaciones", aplicaciones);
+
         return "presentation/empresa/aplicaciones";
     }
 

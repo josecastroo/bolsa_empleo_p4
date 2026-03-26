@@ -14,6 +14,7 @@
         <th>Estado</th>
         <th>Acción</th>
         <th>CV</th>
+        <th>Ver detalle</th>
     </tr>
 
     <tr th:each="app : ${aplicaciones}">
@@ -36,9 +37,25 @@
         Sin CV
     </span>
         </td>
+        <td>
+            <a th:href="@{'/empresa/candidato/' + ${app.candidato.id}}">
+                Ver detalle
+            </a>
+        </td>
     </tr>
     </tr>
 </table>
+
+<h3>Buscar candidato</h3>
+
+<form method="get"
+      th:action="@{'/empresa/puesto/' + ${puesto.id} + '/aplicaciones'}">
+
+    <input type="text" name="keyword" placeholder="Nombre...">
+
+    <button type="submit">Buscar</button>
+
+</form>
 
 </body>
 </html>
