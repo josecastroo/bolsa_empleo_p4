@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inicio</title>
+
+    <style>
+        .detalle {
+            display: none;
+            background: #eee;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .card:hover .detalle {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Últimos puestos</h2>
+
+<div th:each="p : ${puestos}">
+
+    <div class="card" style="border:1px solid black; padding:10px; margin:10px;">
+
+        <h3 th:text="${p.description}"></h3>
+
+        <p th:text="${p.empresa != null ? p.empresa.name : 'Sin empresa'}"></p>
+
+        <span>Ver detalles</span>
+        
+        <div class="detalle"
+             th:if="${mapaCaracteristicas[p.id] != null}">
+
+            <ul>
+                <li th:each="pc : ${mapaCaracteristicas[p.id]}">
+                    <span th:text="${pc.caracteristica.name}"></span>
+                    -
+                    Nivel:
+                    <span th:text="${pc.requiredLevel}"></span>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
