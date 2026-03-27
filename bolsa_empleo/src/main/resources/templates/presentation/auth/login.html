@@ -25,8 +25,8 @@
 
 <form th:action="@{/login}" method="post">
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <label>Email o identificación:</label><br>
+    <input type="text" name="email" required><br><br>
 
     <label>Contraseña:</label><br>
     <input type="password" name="password" required><br><br>
@@ -36,6 +36,7 @@
         <option value="">-- Seleccionar --</option>
         <option value="candidato">Candidato</option>
         <option value="empresa">Empresa</option>
+        <option value="admin">Administrador</option>
     </select><br><br>
 
     <button type="submit">Entrar</button>

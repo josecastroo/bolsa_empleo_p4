@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Candidatos</title>
+</head>
+<body>
+
+<h2>Candidatos</h2>
+
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+
+    <tr th:each="c : ${candidatos}">
+        <td th:text="${c.firstName} + ' ' + ${c.lastName}"></td>
+        <td th:text="${c.email}"></td>
+
+        <td th:text="${c.approved} ? 'Aprobado' : 'Pendiente'"></td>
+
+        <td>
+            <a th:if="${!c.approved}"
+               th:href="@{'/admin/candidato/' + ${c.id} + '/aprobar'}">
+                Aprobar
+            </a>
+
+            <span th:if="${c.approved}">✔️</span>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

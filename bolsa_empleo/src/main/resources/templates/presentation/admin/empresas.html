@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Empresas</title>
+</head>
+<body>
+
+<h2>Empresas</h2>
+
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+
+    <tr th:each="e : ${empresas}">
+        <td th:text="${e.name}"></td>
+        <td th:text="${e.email}"></td>
+
+        <td th:text="${e.approved} ? 'Aprobada' : 'Pendiente'"></td>
+
+        <td>
+            <a th:if="${!e.approved}"
+               th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
+                Aprobar
+            </a>
+
+            <span th:if="${e.approved}">✔️</span>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

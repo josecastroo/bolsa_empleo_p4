@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Características</title>
+</head>
+<body>
+
+<h2>Características</h2>
+
+<h3>Crear nueva</h3>
+
+<form method="post" th:action="@{/admin/caracteristicas}">
+
+  <input type="text" name="name" placeholder="Nombre" required>
+
+  <select name="parentId">
+    <option value="">Sin padre</option>
+    <option th:each="c : ${caracteristicas}"
+            th:value="${c.id}"
+            th:text="${c.name}">
+    </option>
+  </select>
+
+  <button type="submit">Guardar</button>
+
+</form>
+
+<hr>
+
+<h3>Lista</h3>
+
+<ul>
+  <li th:each="c : ${caracteristicas}">
+    <span th:text="${c.name}"></span>
+    <span th:if="${c.parent != null}">
+            (Padre: <span th:text="${c.parent.name}"></span>)
+        </span>
+  </li>
+</ul>
+
+</body>
+</html>
