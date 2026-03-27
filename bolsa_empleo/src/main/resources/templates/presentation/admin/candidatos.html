@@ -29,6 +29,18 @@
 
             <span th:if="${c.approved}">✔️</span>
         </td>
+
+        <td>
+            <a th:if="${!c.approved}"
+               th:href="@{'/admin/candidato/' + ${c.id} + '/aprobar'}">
+                Aprobar
+            </a>
+
+            <a th:if="${!c.approved}"
+               th:href="@{'/admin/candidato/' + ${c.id} + '/rechazar'}">
+                Rechazar
+            </a>
+        </td>
     </tr>
 
 </table>

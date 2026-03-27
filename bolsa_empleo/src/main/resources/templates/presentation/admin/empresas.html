@@ -29,6 +29,17 @@
 
             <span th:if="${e.approved}">✔️</span>
         </td>
+        <td>
+            <a th:if="${!e.approved}"
+               th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
+                Aprobar
+            </a>
+
+            <a th:if="${!e.approved}"
+               th:href="@{'/admin/empresa/' + ${e.id} + '/rechazar'}">
+                Rechazar
+            </a>
+        </td>
     </tr>
 
 </table>

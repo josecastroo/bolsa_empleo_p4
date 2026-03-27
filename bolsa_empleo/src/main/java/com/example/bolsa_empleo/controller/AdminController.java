@@ -10,6 +10,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/admin")
@@ -118,6 +121,18 @@ public class AdminController {
         return "presentation/admin/candidatos";
     }
 
+    @GetMapping("/candidato/{id}/rechazar")
+    public String rechazarCandidato(@PathVariable Long id) {
+
+        Candidato c = candidatoRepository.findById(id).orElse(null);
+
+        if (c != null) {
+            candidatoRepository.delete(c);
+        }
+
+        return "redirect:/admin/candidatos";
+    }
+
     @GetMapping("/candidato/{id}/aprobar")
     public String aprobarCandidato(@PathVariable Long id) {
 
@@ -129,6 +144,18 @@ public class AdminController {
         }
 
         return "redirect:/admin/candidatos";
+    }
+
+    @GetMapping("/empresa/{id}/rechazar")
+    public String rechazarEmpresa(@PathVariable Long id) {
+
+        Empresa e = empresaRepository.findById(id).orElse(null);
+
+        if (e != null) {
+            empresaRepository.delete(e); // simple
+        }
+
+        return "redirect:/admin/empresas";
     }
 
     // caracteristica
@@ -156,7 +183,14 @@ public class AdminController {
     }
 
     @GetMapping("/reporte")
-    public void generarPDF(HttpServletResponse response) throws Exception {
+    public void generarPDF(@RequestParam int year,
+                           @RequestParam int month,
+                           HttpServletResponse response) throws Exception {
+
+        LocalDateTime inicio = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDateTime fin = inicio.plusMonths(1);
+
+        var puestos = puestoRepository.findByCreatedAtBetween(inicio, fin);
 
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=reporte.pdf");
@@ -166,12 +200,26 @@ public class AdminController {
         Document document = new Document(pdf);
 
         document.add(new Paragraph("Reporte de Puestos"));
+        document.add(new Paragraph("Mes: " + month + " / Año: " + year));
+        document.add(new Paragraph(" "));
 
-        var puestos = puestoRepository.findAll();
+        float[] columnas = {200F, 200F, 150F};
+        Table table = new Table(columnas);
+
+        table.addHeaderCell("Descripción");
+        table.addHeaderCell("Empresa");
+        table.addHeaderCell("Fecha");
 
         for (Puesto p : puestos) {
-            document.add(new Paragraph(p.getDescription()));
+            table.addCell(p.getDescription());
+            table.addCell(p.getEmpresa().getName());
+            table.addCell(p.getCreatedAt().toString());
         }
+
+        document.add(table);
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph("Total de puestos: " + puestos.size()));
+
         document.close();
     }
 }

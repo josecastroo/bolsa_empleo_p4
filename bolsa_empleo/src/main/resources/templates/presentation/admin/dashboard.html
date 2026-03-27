@@ -11,8 +11,20 @@
     <li><a th:href="@{/admin/empresas}">Aprobar Empresas</a></li>
     <li><a th:href="@{/admin/candidatos}">Aprobar Candidatos</a></li>
     <li><a th:href="@{/admin/caracteristicas}">Gestionar Características</a></li>
-    <li><a th:href="@{/admin/reporte}">Generar Reporte PDF</a></li>
+<!--    <li><a th:href="@{/admin/reporte}">Generar Reporte PDF</a></li>-->
 </ul>
+
+<h3>Generar Reporte</h3>
+
+<form action="/admin/reporte" method="get">
+
+    <input type="number" name="year" placeholder="Año" required>
+
+    <input type="number" name="month" placeholder="Mes (1-12)" required>
+
+    <button type="submit">Generar PDF</button>
+
+</form>
 
 </body>
 </html>

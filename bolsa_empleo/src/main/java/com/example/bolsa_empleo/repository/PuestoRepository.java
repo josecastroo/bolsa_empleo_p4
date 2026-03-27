@@ -4,6 +4,7 @@ import com.example.bolsa_empleo.model.Puesto;
 import com.example.bolsa_empleo.model.TipoPuesto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PuestoRepository extends JpaRepository<Puesto, Long> {
@@ -15,4 +16,5 @@ public interface PuestoRepository extends JpaRepository<Puesto, Long> {
             TipoPuesto type, boolean active, String keyword);
     List<Puesto> findByTypeAndActive(String type, boolean active);
     List<Puesto> findByActiveTrue();
+    List<Puesto> findByCreatedAtBetween(LocalDateTime inicio, LocalDateTime fin);
 }
