@@ -167,18 +167,18 @@ public class AdminController {
 
     @PostMapping("/caracteristicas")
     public String crear(@RequestParam String name,
-                        @RequestParam(required = false) Long parentId) {
+                        @RequestParam(required = false, defaultValue = "") String parentId) {
 
         Caracteristica c = new Caracteristica();
         c.setName(name);
 
-        if (parentId != null) {
-            var parent = caracteristicaRepository.findById(parentId).orElse(null);
+        if (!parentId.isEmpty()) {
+            Long id = Long.parseLong(parentId);
+            var parent = caracteristicaRepository.findById(id).orElse(null);
             c.setParent(parent);
         }
 
         caracteristicaRepository.save(c);
-
         return "redirect:/admin/caracteristicas";
     }
 
