@@ -20,7 +20,6 @@
     --font-body:    'DM Sans', sans-serif;
 }
 
-/* ─── RESET ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     background: var(--bg-base);
@@ -33,7 +32,6 @@ body {
     flex-direction: column;
 }
 
-/* ─── NAVBAR ────────────────────────────────────────────── */
 .navbar {
     position: sticky;
     top: 0;
@@ -75,7 +73,6 @@ body {
 .btn-login:hover { background: var(--accent-hover); }
 .btn-login svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-/* ─── MAIN ──────────────────────────────────────────────── */
 main {
     flex: 1;
     max-width: 960px;
@@ -92,7 +89,6 @@ main {
     margin-bottom: 1.25rem;
 }
 
-/* ─── EMPTY STATE ───────────────────────────────────────── */
 .empty-state {
     color: var(--text-muted);
     font-size: 14px;
@@ -102,7 +98,6 @@ main {
     text-align: center;
 }
 
-/* ─── JOB CARDS ─────────────────────────────────────────── */
 .jobs-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -134,7 +129,6 @@ main {
     margin-bottom: 12px;
 }
 
-/* ─── VER DETALLES (toggle) ─────────────────────────────── */
 .toggle-btn {
     background: transparent;
     border: 0.5px solid var(--border);
@@ -181,7 +175,6 @@ main {
     font-size: 11px;
 }
 
-/* ─── SEARCH ────────────────────────────────────────────── */
 .search-form {
     display: flex;
     gap: 10px;
@@ -225,7 +218,6 @@ main {
 }
 .btn-search:hover { background: var(--accent-hover); }
 
-/* ─── FOOTER ────────────────────────────────────────────── */
 footer {
     border-top: 0.5px solid var(--border);
     padding: 1.25rem 2rem;

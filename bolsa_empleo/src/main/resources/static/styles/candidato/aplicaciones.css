@@ -50,7 +50,6 @@ h2 {
     margin-bottom: 1.75rem;
 }
 
-/* ── Table ── */
 .table-wrapper {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -105,7 +104,6 @@ tbody td {
     color: var(--text-muted);
 }
 
-/* ── Estado badge ── */
 .badge {
     display: inline-flex;
     align-items: center;

@@ -33,7 +33,6 @@ body {
     flex-direction: column;
 }
 
-/* ─── NAVBAR ────────────────────────────────────────────── */
 .navbar {
     position: sticky;
     top: 0;
@@ -56,7 +55,6 @@ body {
 }
 .nav-logo span { color: var(--accent); }
 
-/* ─── MAIN ──────────────────────────────────────────────── */
 main {
     flex: 1;
     max-width: 860px;
@@ -83,7 +81,6 @@ main {
     margin-bottom: 1rem;
 }
 
-/* ─── NAV CARDS ─────────────────────────────────────────── */
 .nav-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -128,7 +125,6 @@ main {
     stroke: var(--accent-text);
 }
 
-/* ─── REPORTE CARD ──────────────────────────────────────── */
 .reporte-card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -190,7 +186,6 @@ main {
 .btn-pdf:hover { background: var(--accent-hover); }
 .btn-pdf svg { width: 14px; height: 14px; }
 
-/* ─── FOOTER ────────────────────────────────────────────── */
 footer {
     border-top: 0.5px solid var(--border);
     padding: 1.25rem 2rem;

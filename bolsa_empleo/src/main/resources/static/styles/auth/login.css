@@ -32,7 +32,6 @@ body {
     flex-direction: column;
 }
 
-/* ─── NAVBAR ────────────────────────────────────────────── */
 .navbar {
     position: sticky;
     top: 0;
@@ -55,7 +54,6 @@ body {
 }
 .nav-logo span { color: var(--accent); }
 
-/* ─── LAYOUT CENTRADO ───────────────────────────────────── */
 .login-wrapper {
     flex: 1;
     display: flex;
@@ -73,7 +71,6 @@ body {
     max-width: 420px;
 }
 
-/* ─── TÍTULO ────────────────────────────────────────────── */
 .login-card h2 {
     font-family: var(--font-display);
     font-size: 22px;
@@ -82,7 +79,6 @@ body {
     margin-bottom: 1.75rem;
 }
 
-/* ─── MENSAJES DE ESTADO ────────────────────────────────── */
 .msg {
     padding: 10px 14px;
     border-radius: var(--radius-sm);
@@ -93,7 +89,6 @@ body {
 .msg-warning { background: rgba(245,158,11,0.1); color: #fbbf24; border: 0.5px solid rgba(245,158,11,0.2); }
 .msg-success { background: rgba(34,201,122,0.1); color: #4ade80; border: 0.5px solid rgba(34,201,122,0.2); }
 
-/* ─── FORMULARIO ────────────────────────────────────────── */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -138,14 +133,12 @@ body {
 }
 .btn-submit:hover { background: var(--accent-hover); }
 
-/* ─── DIVISOR ───────────────────────────────────────────── */
 .divider {
     border: none;
     border-top: 0.5px solid var(--border);
     margin: 1.75rem 0 1.25rem;
 }
 
-/* ─── REGISTRO LINKS ────────────────────────────────────── */
 .register-section h3 {
     font-family: var(--font-display);
     font-size: 14px;
@@ -174,7 +167,6 @@ body {
     border-color: var(--border-accent);
 }
 
-/* ─── FOOTER ────────────────────────────────────────────── */
 footer {
     border-top: 0.5px solid var(--border);
     padding: 1.25rem 2rem;

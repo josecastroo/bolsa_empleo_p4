@@ -38,7 +38,6 @@ body {
     padding: 2.5rem 2rem;
 }
 
-/* ── Page title ── */
 h2 {
     font-size: 22px;
     font-weight: 700;
@@ -47,7 +46,6 @@ h2 {
     margin-bottom: 1.75rem;
 }
 
-/* ── Table ── */
 .table-wrapper {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -88,7 +86,6 @@ tbody td {
     vertical-align: middle;
 }
 
-/* ── Candidate name + email ── */
 .candidate-name {
     font-size: 14px;
     font-weight: 600;
@@ -101,7 +98,6 @@ tbody td {
     margin-top: 1px;
 }
 
-/* ── Estado badge ── */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -112,13 +108,11 @@ tbody td {
     font-weight: 500;
 }
 
-/* Estado genérico — el color se aplica via clase dinámica o como fallback */
 .badge-default {
     background: rgba(255,255,255,0.06);
     color: var(--text-secondary);
 }
 
-/* ── Action buttons ── */
 .actions-cell {
     display: flex;
     gap: 8px;
@@ -183,7 +177,6 @@ tbody td {
     color: var(--text-muted);
 }
 
-/* ── Search form ── */
 h3 {
     font-size: 15px;
     font-weight: 600;

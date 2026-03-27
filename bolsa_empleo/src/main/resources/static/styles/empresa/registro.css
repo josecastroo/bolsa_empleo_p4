@@ -38,7 +38,6 @@ body {
     max-width: 480px;
 }
 
-/* ── Header ── */
 .form-header {
     margin-bottom: 1.75rem;
 }
@@ -56,7 +55,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* ── Card ── */
 .card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -64,7 +62,6 @@ body {
     padding: 1.75rem;
 }
 
-/* ── Fields ── */
 .field {
     margin-bottom: 1.1rem;
 }
@@ -107,7 +104,6 @@ body {
 .field input:focus,
 .field textarea:focus { border-color: var(--border-accent); }
 
-/* ── Two column row ── */
 .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -115,14 +111,12 @@ body {
     margin-bottom: 1.1rem;
 }
 
-/* ── Divider ── */
 .divider {
     border: none;
     border-top: 0.5px solid var(--border);
     margin: 1.25rem 0;
 }
 
-/* ── Submit ── */
 .btn-primary {
     width: 100%;
     background: var(--accent);

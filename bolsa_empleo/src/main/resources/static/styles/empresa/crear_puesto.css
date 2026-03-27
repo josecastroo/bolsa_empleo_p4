@@ -56,7 +56,6 @@ h3 {
     border-bottom: 0.5px solid var(--border);
 }
 
-/* ── Card ── */
 .card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -65,7 +64,6 @@ h3 {
     margin-bottom: 1.25rem;
 }
 
-/* ── Form fields ── */
 .field {
     margin-bottom: 1.1rem;
 }
@@ -112,7 +110,6 @@ h3 {
 .field input:focus,
 .field select:focus { border-color: var(--border-accent); }
 
-/* Select arrow */
 .select-wrapper {
     position: relative;
 }
@@ -133,7 +130,6 @@ h3 {
     color: var(--text-primary);
 }
 
-/* ── Característica row ── */
 .caracteristica-row {
     display: flex;
     align-items: center;
@@ -180,7 +176,6 @@ h3 {
 
 .nivel-input:focus { border-color: var(--border-accent); }
 
-/* ── Submit ── */
 .btn-primary {
     background: var(--accent);
     color: #fff;

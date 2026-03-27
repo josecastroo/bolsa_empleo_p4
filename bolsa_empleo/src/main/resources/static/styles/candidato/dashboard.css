@@ -40,7 +40,6 @@ body {
     margin: 0 auto;
 }
 
-/* ── Header ── */
 .page-header {
     display: flex;
     align-items: flex-start;
@@ -70,7 +69,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* ── Section title ── */
 h2.section-title {
     font-size: 16px;
     font-weight: 600;
@@ -79,7 +77,6 @@ h2.section-title {
     margin-bottom: 1rem;
 }
 
-/* ── Buttons / links ── */
 .btn-link {
     color: var(--accent-text);
     font-size: 12px;
@@ -127,7 +124,6 @@ h2.section-title {
 
 .btn-apply:hover { background: rgba(34,201,122,0.18); }
 
-/* ── Table ── */
 .table-wrapper {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -175,7 +171,6 @@ tbody td {
     color: var(--text-secondary);
 }
 
-/* ── Match bar ── */
 .match-cell {
     display: flex;
     align-items: center;
@@ -204,7 +199,6 @@ tbody td {
     white-space: nowrap;
 }
 
-/* ── CV upload card ── */
 .cv-card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -252,7 +246,6 @@ tbody td {
 
 input[type="file"] { display: none; }
 
-/* ── Alerts ── */
 .alert {
     padding: 10px 16px;
     border-radius: var(--radius-md);

@@ -41,7 +41,6 @@ h2 {
     margin-bottom: 1.75rem;
 }
 
-/* ── Card ── */
 .card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -50,7 +49,6 @@ h2 {
     margin-bottom: 1.25rem;
 }
 
-/* ── Característica row ── */
 .caracteristica-row {
     display: flex;
     align-items: center;
@@ -97,7 +95,6 @@ h2 {
 
 .nivel-input:focus { border-color: var(--border-accent); }
 
-/* ── Submit ── */
 .btn-primary {
     background: var(--accent);
     color: #fff;

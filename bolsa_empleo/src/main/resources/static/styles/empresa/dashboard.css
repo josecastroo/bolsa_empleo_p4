@@ -43,7 +43,6 @@ body {
     margin: 0 auto;
 }
 
-/* ── Header ── */
 .page-header {
     display: flex;
     align-items: flex-start;
@@ -60,7 +59,6 @@ h2 {
     letter-spacing: -0.02em;
 }
 
-/* ── Pending banner ── */
 .banner-pending {
     background: var(--warning-muted);
     border: 1px solid rgba(245,158,11,0.25);
@@ -74,7 +72,6 @@ h2 {
     gap: 8px;
 }
 
-/* ── Create button ── */
 .btn-primary {
     background: var(--accent);
     color: #fff;
@@ -93,7 +90,6 @@ h2 {
 
 .btn-primary:hover { background: var(--accent-hover); }
 
-/* ── Table ── */
 .table-wrapper {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -149,7 +145,6 @@ tbody td {
     color: var(--text-secondary);
 }
 
-/* ── Type badge ── */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -164,7 +159,6 @@ tbody td {
     color: var(--text-secondary);
 }
 
-/* ── Status badge ── */
 .badge-success {
     background: var(--success-muted);
     color: #4ade80;
@@ -175,7 +169,6 @@ tbody td {
     color: var(--text-muted);
 }
 
-/* ── Action links ── */
 .actions-cell {
     display: flex;
     gap: 8px;

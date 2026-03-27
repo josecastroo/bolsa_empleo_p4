@@ -49,7 +49,6 @@ h3 {
     margin-bottom: 0.75rem;
 }
 
-/* ── Table ── */
 .table-wrapper {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -90,14 +89,12 @@ tbody td {
     vertical-align: middle;
 }
 
-/* ── Row number ── */
 .row-index {
     font-size: 12px;
     color: var(--text-muted);
     font-weight: 500;
 }
 
-/* ── Candidate name + email ── */
 .candidate-name {
     font-size: 14px;
     font-weight: 600;
@@ -110,7 +107,6 @@ tbody td {
     margin-top: 1px;
 }
 
-/* ── Match bar ── */
 .match-cell {
     display: flex;
     align-items: center;
@@ -139,7 +135,6 @@ tbody td {
     white-space: nowrap;
 }
 
-/* ── Detail link ── */
 .btn-link {
     color: var(--accent-text);
     font-size: 12px;
@@ -155,7 +150,6 @@ tbody td {
 
 .btn-link:hover { background: #332e6a; }
 
-/* ── Search form ── */
 .search-form {
     display: flex;
     gap: 10px;

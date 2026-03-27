@@ -39,7 +39,6 @@ body {
     margin: 0 auto;
 }
 
-/* ── Page title ── */
 h2 {
     font-size: 22px;
     font-weight: 700;
@@ -48,7 +47,6 @@ h2 {
     margin-bottom: 1.75rem;
 }
 
-/* ── Card ── */
 .card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -68,7 +66,6 @@ h2 {
     border-bottom: 0.5px solid var(--border);
 }
 
-/* ── Info rows ── */
 .info-row {
     display: flex;
     gap: 1rem;
@@ -92,7 +89,6 @@ h2 {
     color: var(--text-primary);
 }
 
-/* ── Skills list ── */
 .skill-list {
     list-style: none;
     display: flex;
@@ -118,7 +114,6 @@ h2 {
     border: 1px solid var(--border-accent);
 }
 
-/* ── CV ── */
 .btn-link {
     color: var(--accent-text);
     font-size: 13px;

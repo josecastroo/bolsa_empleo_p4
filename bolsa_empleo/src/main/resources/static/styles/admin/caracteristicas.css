@@ -32,7 +32,6 @@ body {
     flex-direction: column;
 }
 
-/* ─── NAVBAR ────────────────────────────────────────────── */
 .navbar {
     position: sticky;
     top: 0;
@@ -55,7 +54,6 @@ body {
 }
 .nav-logo span { color: var(--accent); }
 
-/* ─── MAIN ──────────────────────────────────────────────── */
 main {
     flex: 1;
     max-width: 860px;
@@ -78,7 +76,6 @@ main {
     margin-bottom: 0;
 }
 
-/* ─── CARD COMPARTIDA ───────────────────────────────────── */
 .card {
     background: var(--bg-card);
     border: 0.5px solid var(--border);
@@ -96,7 +93,6 @@ main {
     margin-bottom: 1.25rem;
 }
 
-/* ─── FORMULARIO ────────────────────────────────────────── */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -137,7 +133,6 @@ main {
 }
 .btn-guardar:hover { background: var(--accent-hover); }
 
-/* ─── LISTA ─────────────────────────────────────────────── */
 .lista {
     list-style: none;
     display: flex;
@@ -170,7 +165,6 @@ main {
     white-space: nowrap;
 }
 
-/* ─── FOOTER ────────────────────────────────────────────── */
 footer {
     border-top: 0.5px solid var(--border);
     padding: 1.25rem 2rem;
