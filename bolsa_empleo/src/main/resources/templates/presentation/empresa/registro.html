@@ -1,37 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Registro Empresa</title>
+    <link rel="stylesheet" th:href="@{/styles/empresa/registro.css}" href="registro-empresa.css" />
 </head>
-
 <body>
-    <h2>Registro de Empresa</h2>
 
-    <form th:action="@{/empresa/registro}" th:object="${empresa}" method="post">
+<div class="form-wrapper">
 
-        <label>Nombre:</label>
-        <input type="text" th:field="*{name}" required><br>
+    <div class="form-header">
+        <h2>Registro de Empresa</h2>
+        <p>Completá el formulario para crear tu cuenta</p>
+    </div>
 
-        <label>Ubicación:</label>
-        <input type="text" th:field="*{location}" required><br>
+    <div class="card">
+        <form th:action="@{/empresa/registro}" th:object="${empresa}" method="post">
 
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" required><br>
+            <!-- Nombre + Ubicación -->
+            <div class="field-row">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" th:field="*{name}" required placeholder="Nombre de la empresa" />
+                </div>
+                <div class="field">
+                    <label>Ubicación</label>
+                    <input type="text" th:field="*{location}" required placeholder="Ciudad, País" />
+                </div>
+            </div>
 
-        <label>Teléfono:</label>
-        <input type="text" th:field="*{phone}" required><br>
+            <!-- Email + Teléfono -->
+            <div class="field-row">
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" th:field="*{email}" required placeholder="correo@empresa.com" />
+                </div>
+                <div class="field">
+                    <label>Teléfono</label>
+                    <input type="text" th:field="*{phone}" required placeholder="+506 0000-0000" />
+                </div>
+            </div>
 
-        <label>Descripción:</label>
-        <textarea th:field="*{description}"></textarea><br>
+            <!-- Descripción -->
+            <div class="field">
+                <label>Descripción</label>
+                <textarea th:field="*{description}" placeholder="Contanos sobre tu empresa..."></textarea>
+            </div>
 
-        <label>Contraseña:</label>
-        <input type="password" th:field="*{password}" required><br>
+            <hr class="divider" />
 
-        <button type="submit">Registrarse</button>
+            <!-- Contraseña -->
+            <div class="field">
+                <label>Contraseña</label>
+                <input type="password" th:field="*{password}" required placeholder="••••••••" />
+            </div>
 
-    </form>
+            <button class="btn-primary" type="submit">Crear cuenta</button>
+
+        </form>
+    </div>
+
+</div>
 </body>
-
 </html>

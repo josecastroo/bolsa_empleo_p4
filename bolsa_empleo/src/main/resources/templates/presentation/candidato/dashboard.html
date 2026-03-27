@@ -1,51 +1,87 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Dashboard Candidato</title>
+    <link rel="stylesheet" th:href="@{/styles/candidato/dashboard.css}" href="dashboard-candidato.css" />
 </head>
 <body>
+<div class="page-wrapper">
 
-<h2>Dashboard Candidato</h2>
+    <!-- Alerts -->
+    <div class="alert alert-danger" th:if="${param.yaAplico}">
+        ✕ Ya aplicaste a este puesto.
+    </div>
+    <div class="alert alert-success" th:if="${param.success}">
+        ✓ Aplicación enviada correctamente.
+    </div>
 
-<h3 th:text="'Bienvenido ' + ${candidato.firstName}"></h3>
+    <!-- Header -->
+    <div class="page-header">
+        <div class="page-header-text">
+            <h2 th:text="'Bienvenido, ' + ${candidato.firstName}"></h2>
+            <p>Dashboard del candidato</p>
+        </div>
+        <div class="header-links">
+            <a class="btn-link" href="/candidato/habilidades">Mis habilidades</a>
+            <a class="btn-link" href="/candidato/aplicaciones">Mis aplicaciones</a>
+        </div>
+    </div>
 
-<a href="/candidato/habilidades">Agregar habilidades</a>
-<hr/>
-<a href="/candidato/aplicaciones">Ver mis aplicaciones</a>
+    <!-- CV upload -->
+    <div class="cv-card">
+        <div>
+            <div class="cv-label">Currículum (CV)</div>
+            <div class="cv-hint">Solo PDF · Se reemplaza el anterior</div>
+        </div>
+        <form class="cv-actions" th:action="@{/candidato/cv}" method="post" enctype="multipart/form-data">
+            <label class="file-input-label" for="cvFile">Seleccionar archivo</label>
+            <input type="file" id="cvFile" name="file" accept="application/pdf" required />
+            <button class="btn-primary" type="submit">Subir CV</button>
+        </form>
+    </div>
 
-<h2>Mis oportunidades</h2>
+    <!-- Oportunidades -->
+    <h2 class="section-title">Mis oportunidades</h2>
 
-<table border="1">
-    <tr>
-        <th>Puesto</th>
-        <th>Salario</th>
-        <th>Match %</th>
-    </tr>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Puesto</th>
+                <th>Salario</th>
+                <th>Match %</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${matches}">
 
-    <tr th:each="entry : ${matches}">
-        <td th:text="${entry.key.description}"></td>
-        <td th:text="${entry.key.salary}"></td>
-        <td th:text="${#numbers.formatDecimal(entry.value, 0, 2)} + '%'"></td>
-        <td>
-            <a th:href="@{'/candidato/aplicar/' + ${entry.key.id}}">
-                Aplicar
-            </a>
-        </td>
-    </tr>
-</table>
+                <td class="td-puesto" th:text="${entry.key.description}"></td>
 
-<form th:action="@{/candidato/cv}" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept="application/pdf" required>
-    <button type="submit">Registrar CV</button>
-</form>
+                <td class="td-salary" th:text="${entry.key.salary}"></td>
 
-<p th:if="${param.yaAplico}" style="color:red">
-    Ya aplicaste a este puesto
-</p>
+                <td>
+                    <div class="match-cell">
+                        <div class="match-bar-bg">
+                            <div class="match-bar-fill"
+                                 th:style="'width:' + ${entry.value} + '%'"></div>
+                        </div>
+                        <span class="match-value"
+                              th:text="${#numbers.formatDecimal(entry.value, 0, 2)} + '%'"></span>
+                    </div>
+                </td>
 
-<p th:if="${param.success}" style="color:green">
-    Aplicación enviada correctamente
-</p>
+                <td>
+                    <a class="btn-apply"
+                       th:href="@{'/candidato/aplicar/' + ${entry.key.id}}">Aplicar</a>
+                </td>
 
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </body>
 </html>

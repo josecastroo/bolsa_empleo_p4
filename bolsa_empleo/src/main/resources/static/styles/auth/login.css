@@ -1,0 +1,185 @@
+:root {
+    --bg-base:        #0f1117;
+    --bg-surface:     #181c26;
+    --bg-card:        #1e2333;
+    --bg-input:       #13161f;
+    --accent:         #6C63FF;
+    --accent-hover:   #8077ff;
+    --accent-muted:   #2a2657;
+    --accent-text:    #a89fff;
+    --text-primary:   #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted:     #5a5e72;
+    --border:         rgba(255,255,255,0.07);
+    --border-accent:  rgba(108,99,255,0.3);
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── NAVBAR ────────────────────────────────────────────── */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--accent); }
+
+/* ─── LAYOUT CENTRADO ───────────────────────────────────── */
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.login-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ─── TÍTULO ────────────────────────────────────────────── */
+.login-card h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
+}
+
+/* ─── MENSAJES DE ESTADO ────────────────────────────────── */
+.msg {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 1.25rem;
+}
+.msg-error   { background: rgba(239,68,68,0.1);  color: #f87171; border: 0.5px solid rgba(239,68,68,0.2); }
+.msg-warning { background: rgba(245,158,11,0.1); color: #fbbf24; border: 0.5px solid rgba(245,158,11,0.2); }
+.msg-success { background: rgba(34,201,122,0.1); color: #4ade80; border: 0.5px solid rgba(34,201,122,0.2); }
+
+/* ─── FORMULARIO ────────────────────────────────────────── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1.1rem;
+}
+.form-group label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+.form-group input,
+.form-group select {
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 10px 13px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+.form-group input::placeholder { color: var(--text-muted); }
+.form-group input:focus,
+.form-group select:focus { border-color: var(--border-accent); }
+.form-group select option { background: var(--bg-card); color: var(--text-primary); }
+
+.btn-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 11px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+.btn-submit:hover { background: var(--accent-hover); }
+
+/* ─── DIVISOR ───────────────────────────────────────────── */
+.divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1.75rem 0 1.25rem;
+}
+
+/* ─── REGISTRO LINKS ────────────────────────────────────── */
+.register-section h3 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+.register-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.register-links a {
+    display: block;
+    text-align: center;
+    padding: 9px;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border);
+    color: var(--accent-text);
+    font-size: 13px;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+}
+.register-links a:hover {
+    background: var(--accent-muted);
+    border-color: var(--border-accent);
+}
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+footer span { color: var(--accent-text); }

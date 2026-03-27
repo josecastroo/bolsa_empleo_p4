@@ -1,44 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Registro Candidato</title>
+    <link rel="stylesheet" th:href="@{/styles/candidato/registro.css}" href="registro-candidato.css" />
 </head>
 <body>
 
-<h2>Registro Candidato</h2>
+<div class="form-wrapper">
 
-<form th:action="@{/candidato/registro}" th:object="${candidato}" method="post">
+    <div class="form-header">
+        <h2>Registro Candidato</h2>
+        <p>Completá el formulario para crear tu cuenta</p>
+    </div>
 
-    <label>Identificación:</label>
-    <input type="text" th:field="*{identification}" required><br>
+    <div class="card">
+        <form th:action="@{/candidato/registro}" th:object="${candidato}" method="post">
 
-    <label>Nombre:</label>
-    <input type="text" th:field="*{firstName}" required><br>
+            <!-- Identificación (fila completa) -->
+            <div class="field">
+                <label>Identificación</label>
+                <input type="text" th:field="*{identification}" required placeholder="Número de identificación" />
+            </div>
 
-    <label>Apellido:</label>
-    <input type="text" th:field="*{lastName}" required><br>
+            <!-- Nombre + Apellido -->
+            <div class="field-row">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" th:field="*{firstName}" required placeholder="Nombre" />
+                </div>
+                <div class="field">
+                    <label>Apellido</label>
+                    <input type="text" th:field="*{lastName}" required placeholder="Apellido" />
+                </div>
+            </div>
 
-    <label>Nacionalidad:</label>
-    <input type="text" th:field="*{nationality}" required><br>
+            <!-- Nacionalidad + Residencia -->
+            <div class="field-row">
+                <div class="field">
+                    <label>Nacionalidad</label>
+                    <input type="text" th:field="*{nationality}" required placeholder="Ej: Costarricense" />
+                </div>
+                <div class="field">
+                    <label>Residencia</label>
+                    <input type="text" th:field="*{residence}" required placeholder="Ciudad, País" />
+                </div>
+            </div>
 
-    <label>Teléfono:</label>
-    <input type="text" th:field="*{phone}" required><br>
+            <!-- Teléfono + Email -->
+            <div class="field-row">
+                <div class="field">
+                    <label>Teléfono</label>
+                    <input type="text" th:field="*{phone}" required placeholder="+506 0000-0000" />
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" th:field="*{email}" required placeholder="correo@ejemplo.com" />
+                </div>
+            </div>
 
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" required><br>
+            <hr class="divider" />
 
-    <label>Residencia:</label>
-    <input type="text" th:field="*{residence}" required><br>
+            <!-- Contraseña -->
+            <div class="field">
+                <label>Contraseña</label>
+                <input type="password" th:field="*{password}" required placeholder="••••••••" />
+            </div>
 
-    <label>Password:</label>
-    <input type="password" th:field="*{password}" required><br>
+            <!-- Hidden -->
+            <input type="hidden" th:field="*{approved}" value="true" />
 
-    <!-- opcional -->
-    <input type="hidden" th:field="*{approved}" value="true">
+            <button class="btn-primary" type="submit">Crear cuenta</button>
 
-    <button type="submit">Registrarse</button>
+        </form>
+    </div>
 
-</form>
-
+</div>
 </body>
 </html>

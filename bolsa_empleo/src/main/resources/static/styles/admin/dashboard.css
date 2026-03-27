@@ -1,0 +1,201 @@
+:root {
+    --bg-base:        #0f1117;
+    --bg-surface:     #181c26;
+    --bg-card:        #1e2333;
+    --bg-card-hover:  #242840;
+    --bg-input:       #13161f;
+    --accent:         #6C63FF;
+    --accent-hover:   #8077ff;
+    --accent-muted:   #2a2657;
+    --accent-text:    #a89fff;
+    --text-primary:   #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted:     #5a5e72;
+    --border:         rgba(255,255,255,0.07);
+    --border-accent:  rgba(108,99,255,0.3);
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── NAVBAR ────────────────────────────────────────────── */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--accent); }
+
+/* ─── MAIN ──────────────────────────────────────────────── */
+main {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3rem;
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+}
+
+/* ─── NAV CARDS ─────────────────────────────────────────── */
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 2.5rem;
+    list-style: none;
+}
+
+.nav-grid li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+}
+.nav-grid li a:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+    color: var(--accent-text);
+}
+
+.nav-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.nav-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent-text);
+}
+
+/* ─── REPORTE CARD ──────────────────────────────────────── */
+.reporte-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+
+.reporte-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-top: 0.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 120px;
+}
+.form-group label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.form-group input {
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+.form-group input::placeholder { color: var(--text-muted); }
+.form-group input:focus { border-color: var(--border-accent); }
+
+.btn-pdf {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: fit-content;
+}
+.btn-pdf:hover { background: var(--accent-hover); }
+.btn-pdf svg { width: 14px; height: 14px; }
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+footer span { color: var(--accent-text); }

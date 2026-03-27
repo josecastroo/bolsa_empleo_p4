@@ -1,44 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Crear puesto</title>
+    <link rel="stylesheet" th:href="@{/styles/empresa/crear_puesto.css}" href="crear-puesto.css" />
 </head>
-
 <body>
+<div class="page-wrapper">
+
     <h2>Crear Puesto</h2>
 
     <form th:action="@{/empresa/puesto}" th:object="${puesto}" method="post">
 
-        <label>Descripción:</label>
-        <textarea th:field="*{description}" required></textarea><br>
+        <!-- Campos principales -->
+        <div class="card">
 
-        <label>Salario:</label>
-        <input type="number" step="0.01" th:field="*{salary}" required><br>
+            <div class="field">
+                <label>Descripción</label>
+                <textarea th:field="*{description}" required placeholder="Describe el puesto..."></textarea>
+            </div>
 
-        <label>Tipo:</label>
-        <select th:field="*{type}">
-            <option value="PUBLIC">PUBLIC</option>
-            <option value="PRIVATE">PRIVATE</option>
-        </select><br>
+            <div class="field">
+                <label>Salario</label>
+                <input type="number" step="0.01" th:field="*{salary}" required placeholder="0.00" />
+            </div>
 
-        <h3>Características requeridas</h3>
+            <div class="field">
+                <label>Tipo</label>
+                <div class="select-wrapper">
+                    <select th:field="*{type}">
+                        <option value="PUBLIC">Público</option>
+                        <option value="PRIVATE">Privado</option>
+                    </select>
+                </div>
+            </div>
 
-        <div th:each="c : ${caracteristicas}">
-            <label>
-                <input type="checkbox" name="caracteristicaIds" th:value="${c.id}">
-                <span th:text="${c.name}"></span>
-            </label>
-
-            Nivel:
-            <input type="number" name="niveles" min="1" max="5">
-            <br>
         </div>
 
-        <button type="submit">Crear</button>
+        <!-- Características -->
+        <div class="card">
+            <h3>Características requeridas</h3>
+
+            <div class="caracteristica-row" th:each="c : ${caracteristicas}">
+                <input type="checkbox" name="caracteristicaIds" th:value="${c.id}" />
+                <span class="caracteristica-name" th:text="${c.name}"></span>
+                <span class="nivel-label">Nivel</span>
+                <input class="nivel-input" type="number" name="niveles" min="1" max="5" placeholder="1" />
+            </div>
+        </div>
+
+        <button class="btn-primary" type="submit">Crear puesto</button>
 
     </form>
-</body>
 
+</div>
+</body>
 </html>

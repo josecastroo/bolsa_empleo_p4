@@ -1,59 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — JobBoard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/auth/login.css}">
 </head>
-
 <body>
 
-<h2>Iniciar sesión</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="nav-logo" th:href="@{/}" href="/">Job<span>Board</span></a>
+</nav>
 
-<div th:if="${param.error}">
-    <p style="color:red;">Credenciales incorrectas</p>
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <h2>Iniciar sesión</h2>
+
+        <!-- Mensajes de estado -->
+        <div th:if="${param.error}" class="msg msg-error">
+            Credenciales incorrectas.
+        </div>
+        <div th:if="${param.notApproved}" class="msg msg-warning">
+            Empresa pendiente de aprobación.
+        </div>
+        <div th:if="${param.logout}" class="msg msg-success">
+            Sesión cerrada correctamente.
+        </div>
+
+        <!-- Formulario -->
+        <form th:action="@{/login}" method="post">
+
+            <div class="form-group">
+                <label>Email o identificación</label>
+                <input type="text" name="email" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo de usuario</label>
+                <select name="tipo" required>
+                    <option value="">-- Seleccionar --</option>
+                    <option value="candidato">Candidato</option>
+                    <option value="empresa">Empresa</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar</button>
+
+        </form>
+
+        <hr class="divider">
+
+        <!-- Registro -->
+        <div class="register-section">
+            <h3>¿No tienes cuenta?</h3>
+            <div class="register-links">
+                <a th:href="@{/candidato/registro}">Registrarse como Candidato</a>
+                <a th:href="@{/empresa/registro}">Registrarse como Empresa</a>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<div th:if="${param.notApproved}">
-    <p style="color:orange;">Empresa pendiente de aprobación</p>
-</div>
-
-<div th:if="${param.logout}">
-    <p style="color:green;">Sesión cerrada</p>
-</div>
-
-<hr>
-
-<form th:action="@{/login}" method="post">
-
-    <label>Email o identificación:</label><br>
-    <input type="text" name="email" required><br><br>
-
-    <label>Contraseña:</label><br>
-    <input type="password" name="password" required><br><br>
-
-    <label>Tipo de usuario:</label><br>
-    <select name="tipo" required>
-        <option value="">-- Seleccionar --</option>
-        <option value="candidato">Candidato</option>
-        <option value="empresa">Empresa</option>
-        <option value="admin">Administrador</option>
-    </select><br><br>
-
-    <button type="submit">Entrar</button>
-
-</form>
-
-<hr>
-
-<h3>¿No tienes cuenta?</h3>
-
-<p>
-    <a th:href="@{/candidato/registro}">Registrarse como Candidato</a>
-</p>
-
-<p>
-    <a th:href="@{/empresa/registro}">Registrarse como Empresa</a>
-</p>
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 <span>JobBoard</span></p>
+</footer>
 
 </body>
 </html>

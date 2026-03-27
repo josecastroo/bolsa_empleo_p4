@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+    --bg-base: #0f1117;
+    --bg-surface: #181c26;
+    --bg-card: #1e2333;
+    --bg-card-hover: #242840;
+    --bg-input: #141720;
+    --accent: #6C63FF;
+    --accent-hover: #8077ff;
+    --accent-muted: #2a2657;
+    --accent-text: #a89fff;
+    --success: #22c97a;
+    --success-muted: #0d2e1e;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted: #5a5e72;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(108,99,255,0.35);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --font: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    font-family: var(--font);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2.5rem 2rem;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+}
+
+h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+/* ── Table ── */
+.table-wrapper {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    padding: 10px 1.25rem;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.02);
+    border-bottom: 0.5px solid var(--border);
+}
+
+tbody tr {
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.12s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg-card-hover); }
+
+tbody td {
+    padding: 13px 1.25rem;
+    font-size: 14px;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+/* ── Row number ── */
+.row-index {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ── Candidate name + email ── */
+.candidate-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.candidate-email {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+}
+
+/* ── Match bar ── */
+.match-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.match-bar-bg {
+    width: 80px;
+    height: 5px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 99px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.match-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent);
+}
+
+.match-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-text);
+    white-space: nowrap;
+}
+
+/* ── Detail link ── */
+.btn-link {
+    color: var(--accent-text);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-accent);
+    background: var(--accent-muted);
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.btn-link:hover { background: #332e6a; }
+
+/* ── Search form ── */
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: var(--font);
+    width: 240px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--border-accent); }
+
+.btn-search {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-search:hover { background: var(--accent-hover); }

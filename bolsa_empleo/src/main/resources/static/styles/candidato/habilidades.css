@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+    --bg-base: #0f1117;
+    --bg-card: #1e2333;
+    --bg-input: #141720;
+    --accent: #6C63FF;
+    --accent-hover: #8077ff;
+    --accent-muted: #2a2657;
+    --accent-text: #a89fff;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted: #5a5e72;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(108,99,255,0.35);
+    --radius-md: 10px;
+    --radius-xl: 20px;
+    --font: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    font-family: var(--font);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2.5rem 2rem;
+}
+
+.page-wrapper {
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+}
+
+/* ── Card ── */
+.card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+/* ── Característica row ── */
+.caracteristica-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 1.25rem;
+    border-bottom: 0.5px solid var(--border);
+}
+
+.caracteristica-row:last-child { border-bottom: none; }
+
+.caracteristica-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.caracteristica-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.nivel-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.nivel-input {
+    width: 64px;
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    text-align: center;
+    transition: border-color 0.15s;
+}
+
+.nivel-input:focus { border-color: var(--border-accent); }
+
+/* ── Submit ── */
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-primary:hover { background: var(--accent-hover); }

@@ -1,74 +1,88 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Inicio</title>
-
-    <style>
-        .detalle {
-            display: none;
-            background: #eee;
-            padding: 5px;
-            margin-top: 5px;
-        }
-
-        .card:hover .detalle {
-            display: block;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio — JobBoard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/public/home.css}">
 </head>
-
 <body>
 
-<h2>Últimos puestos</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="nav-logo" href="#">Job<span>Board</span></a>
+    <div class="nav-spacer"></div>
+    <a class="btn-login" th:href="@{/login}" href="/login">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="8" cy="5.5" r="2.8"/>
+            <path d="M2.5 14c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5" stroke-linecap="round"/>
+        </svg>
+        Iniciar sesión
+    </a>
+</nav>
 
-<div th:if="${puestos == null or #lists.isEmpty(puestos)}">
-    <p>No se encontraron puestos con esos criterios.</p>
-</div>
-<div th:each="p : ${puestos}">
+<main>
 
-    <div class="card" style="border:1px solid black; padding:10px; margin:10px;">
+    <h2 class="section-title">Últimos puestos</h2>
 
-        <h3 th:text="${p.description}"></h3>
-
-        <p th:text="${p.empresa != null ? p.empresa.name : 'Sin empresa'}"></p>
-
-        <span>Ver detalles</span>
-
-        <div class="detalle"
-             th:if="${mapaCaracteristicas[p.id] != null}">
-
-            <ul>
-                <li th:each="pc : ${mapaCaracteristicas[p.id]}">
-                    <span th:text="${pc.caracteristica.name}"></span>
-                    -
-                    Nivel:
-                    <span th:text="${pc.requiredLevel}"></span>
-                </li>
-            </ul>
-
-        </div>
-
+    <div th:if="${puestos == null or #lists.isEmpty(puestos)}" class="empty-state">
+        <p>No se encontraron puestos con esos criterios.</p>
     </div>
 
-</div>
+    <div class="jobs-list">
+        <div th:each="p : ${puestos}" class="card">
 
-<h2>Buscar puestos</h2>
+            <h3 th:text="${p.description}">Título del puesto</h3>
 
-<form th:action="@{/buscar}" method="get">
+            <p th:text="${p.empresa != null ? p.empresa.name : 'Sin empresa'}">Empresa</p>
 
-    <input type="text" name="keyword" placeholder="Buscar...">
+            <div th:if="${mapaCaracteristicas[p.id] != null}">
+                <button class="toggle-btn" onclick="toggleDetalle(this)">
+                    <span>Ver detalles</span>
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 4l4 4 4-4"/>
+                    </svg>
+                </button>
+                <div class="detalle">
+                    <ul>
+                        <li th:each="pc : ${mapaCaracteristicas[p.id]}">
+                            <span th:text="${pc.caracteristica.name}">Característica</span>
+                            <span class="nivel">Nivel: <span th:text="${pc.requiredLevel}">1</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-    <select name="caracteristicaId">
-        <option value="">-- Característica --</option>
-        <option th:each="c : ${caracteristicas}"
-                th:value="${c.id}"
-                th:text="${c.name}">
-        </option>
-    </select>
+        </div>
+    </div>
 
-    <button type="submit">Buscar</button>
+    <h2 class="section-title">Buscar puestos</h2>
 
-</form>
+    <form class="search-form" th:action="@{/buscar}" method="get">
+        <input type="text" name="keyword" placeholder="Buscar...">
+        <select name="caracteristicaId">
+            <option value="">-- Característica --</option>
+            <option th:each="c : ${caracteristicas}"
+                    th:value="${c.id}"
+                    th:text="${c.name}">
+            </option>
+        </select>
+        <button type="submit" class="btn-search">Buscar</button>
+    </form>
+
+</main>
+
+<footer>
+    <p>© 2025 <span>JobBoard</span></p>
+</footer>
+
+<script>
+    function toggleDetalle(btn) {
+        btn.classList.toggle('open');
+        btn.nextElementSibling.classList.toggle('visible');
+    }
+</script>
 
 </body>
 </html>

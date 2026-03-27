@@ -1,0 +1,236 @@
+:root {
+    --bg-base:        #0f1117;
+    --bg-surface:     #181c26;
+    --bg-card:        #1e2333;
+    --bg-card-hover:  #242840;
+    --bg-input:       #13161f;
+    --accent:         #6C63FF;
+    --accent-hover:   #8077ff;
+    --accent-muted:   #2a2657;
+    --accent-text:    #a89fff;
+    --text-primary:   #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted:     #5a5e72;
+    --border:         rgba(255,255,255,0.07);
+    --border-accent:  rgba(108,99,255,0.3);
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+}
+
+/* ─── RESET ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── NAVBAR ────────────────────────────────────────────── */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--accent); }
+.nav-spacer { flex: 1; }
+.btn-login {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s;
+}
+.btn-login:hover { background: var(--accent-hover); }
+.btn-login svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ─── MAIN ──────────────────────────────────────────────── */
+main {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+}
+
+/* ─── EMPTY STATE ───────────────────────────────────────── */
+.empty-state {
+    color: var(--text-muted);
+    font-size: 14px;
+    padding: 2rem;
+    border: 0.5px dashed var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+/* ─── JOB CARDS ─────────────────────────────────────────── */
+.jobs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    transition: background 0.2s, border-color 0.2s;
+}
+.card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+}
+.card h3 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+.card > p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+/* ─── VER DETALLES (toggle) ─────────────────────────────── */
+.toggle-btn {
+    background: transparent;
+    border: 0.5px solid var(--border);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+.toggle-btn:hover { background: var(--bg-surface); color: var(--text-secondary); }
+.toggle-btn svg { width: 11px; height: 11px; transition: transform 0.2s; }
+.toggle-btn.open svg { transform: rotate(180deg); }
+
+.detalle {
+    display: none;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-top: 8px;
+}
+.detalle.visible { display: block; }
+.detalle ul { list-style: none; }
+.detalle li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.detalle li:last-child { border-bottom: none; }
+.nivel {
+    background: var(--accent-muted);
+    color: var(--accent-text);
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-size: 11px;
+}
+
+/* ─── SEARCH ────────────────────────────────────────────── */
+.search-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+}
+.search-form input,
+.search-form select {
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    flex: 1;
+    min-width: 150px;
+    transition: border-color 0.2s;
+}
+.search-form input::placeholder { color: var(--text-muted); }
+.search-form input:focus,
+.search-form select:focus { border-color: var(--border-accent); }
+.search-form select option { background: var(--bg-card); color: var(--text-primary); }
+.btn-search {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.btn-search:hover { background: var(--accent-hover); }
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+footer span { color: var(--accent-text); }

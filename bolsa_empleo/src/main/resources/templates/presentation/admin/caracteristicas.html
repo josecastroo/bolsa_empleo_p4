@@ -1,42 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-  <title>Características</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Características — JobBoard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/styles/admin/caracteristicas.css}">
 </head>
 <body>
 
-<h2>Características</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" th:href="@{/}" href="/">Bolsa<span>Empleo</span></a>
+</nav>
 
-<h3>Crear nueva</h3>
+<main>
 
-<form method="post" th:action="@{/admin/caracteristicas}">
+  <h2 class="page-title">Características</h2>
 
-  <input type="text" name="name" placeholder="Nombre" required>
+  <!-- Crear nueva -->
+  <div class="card">
+    <div class="card-title">Crear nueva</div>
 
-  <select name="parentId">
-    <option value="">Sin padre</option>
-    <option th:each="c : ${caracteristicas}"
-            th:value="${c.id}"
-            th:text="${c.name}">
-    </option>
-  </select>
+    <form method="post" th:action="@{/admin/caracteristicas}">
 
-  <button type="submit">Guardar</button>
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Nombre" required>
+      </div>
 
-</form>
+      <div class="form-group">
+        <select name="parentId">
+          <option value="">Sin padre</option>
+          <option th:each="c : ${caracteristicas}"
+                  th:value="${c.id}"
+                  th:text="${c.name}">
+          </option>
+        </select>
+      </div>
 
-<hr>
+      <button type="submit" class="btn-guardar">Guardar</button>
 
-<h3>Lista</h3>
+    </form>
+  </div>
 
-<ul>
-  <li th:each="c : ${caracteristicas}">
-    <span th:text="${c.name}"></span>
-    <span th:if="${c.parent != null}">
-            (Padre: <span th:text="${c.parent.name}"></span>)
-        </span>
-  </li>
-</ul>
+  <!-- Lista -->
+  <div class="card">
+    <div class="card-title">Lista</div>
+
+    <ul class="lista">
+      <li th:each="c : ${caracteristicas}">
+        <span th:text="${c.name}">Nombre</span>
+        <span th:if="${c.parent != null}"
+              class="padre-badge"
+              th:text="${c.parent.name}">Padre</span>
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 <span>Bolsa Empleo</span></p>
+</footer>
 
 </body>
 </html>

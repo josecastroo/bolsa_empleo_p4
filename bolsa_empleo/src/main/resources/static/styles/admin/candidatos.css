@@ -1,0 +1,189 @@
+:root {
+    --bg-base:        #0f1117;
+    --bg-surface:     #181c26;
+    --bg-card:        #1e2333;
+    --accent:         #6C63FF;
+    --accent-hover:   #8077ff;
+    --accent-muted:   #2a2657;
+    --accent-text:    #a89fff;
+    --success-muted:  #0d2e1e;
+    --danger-muted:   #2d1010;
+    --text-primary:   #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted:     #5a5e72;
+    --border:         rgba(255,255,255,0.07);
+    --border-accent:  rgba(108,99,255,0.3);
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── NAVBAR ────────────────────────────────────────────── */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--accent); }
+
+/* ─── MAIN ──────────────────────────────────────────────── */
+main {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3rem;
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+/* ─── TABLA ─────────────────────────────────────────────── */
+.table-wrapper {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border);
+}
+
+thead th {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+tbody tr {
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg-surface); }
+
+tbody td {
+    padding: 13px 16px;
+    font-size: 14px;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+/* ─── BADGES ────────────────────────────────────────────── */
+.badge-aprobado {
+    display: inline-block;
+    background: var(--success-muted);
+    color: #4ade80;
+    border: 0.5px solid rgba(34,201,122,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.badge-pendiente {
+    display: inline-block;
+    background: rgba(245,158,11,0.1);
+    color: #fbbf24;
+    border: 0.5px solid rgba(245,158,11,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ─── ACCIONES ──────────────────────────────────────────── */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-aprobar {
+    background: var(--success-muted);
+    color: #4ade80;
+    border: 0.5px solid rgba(34,201,122,0.2);
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-aprobar:hover { background: rgba(34,201,122,0.2); }
+
+.btn-rechazar {
+    background: var(--danger-muted);
+    color: #f87171;
+    border: 0.5px solid rgba(239,68,68,0.2);
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-rechazar:hover { background: rgba(239,68,68,0.2); }
+
+.icon-aprobado {
+    color: #4ade80;
+    font-size: 14px;
+}
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+footer span { color: var(--accent-text); }

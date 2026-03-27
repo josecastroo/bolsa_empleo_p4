@@ -1,49 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Candidatos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidatos — JobBoard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/admin/candidatos.css}">
 </head>
 <body>
 
-<h2>Candidatos</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="nav-logo" th:href="@{/}" href="/">Bolsa<span>Empleo</span></a>
+</nav>
 
-<table border="1">
-    <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Estado</th>
-        <th>Acción</th>
-    </tr>
+<main>
 
-    <tr th:each="c : ${candidatos}">
-        <td th:text="${c.firstName} + ' ' + ${c.lastName}"></td>
-        <td th:text="${c.email}"></td>
+    <h2 class="page-title">Candidatos</h2>
 
-        <td th:text="${c.approved} ? 'Aprobado' : 'Pendiente'"></td>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${candidatos}">
 
-        <td>
-            <a th:if="${!c.approved}"
-               th:href="@{'/admin/candidato/' + ${c.id} + '/aprobar'}">
-                Aprobar
-            </a>
+                <td th:text="${c.firstName} + ' ' + ${c.lastName}">Nombre</td>
 
-            <span th:if="${c.approved}">✔️</span>
-        </td>
+                <td th:text="${c.email}">email@ejemplo.com</td>
 
-        <td>
-            <a th:if="${!c.approved}"
-               th:href="@{'/admin/candidato/' + ${c.id} + '/aprobar'}">
-                Aprobar
-            </a>
+                <td>
+                    <span th:if="${c.approved}"  class="badge-aprobado">Aprobado</span>
+                    <span th:if="${!c.approved}" class="badge-pendiente">Pendiente</span>
+                </td>
 
-            <a th:if="${!c.approved}"
-               th:href="@{'/admin/candidato/' + ${c.id} + '/rechazar'}">
-                Rechazar
-            </a>
-        </td>
-    </tr>
+                <td>
+                    <div class="actions">
+                        <a th:if="${!c.approved}"
+                           th:href="@{'/admin/candidato/' + ${c.id} + '/aprobar'}"
+                           class="btn-aprobar">Aprobar</a>
 
-</table>
+                        <a th:if="${!c.approved}"
+                           th:href="@{'/admin/candidato/' + ${c.id} + '/rechazar'}"
+                           class="btn-rechazar">Rechazar</a>
+
+                        <span th:if="${c.approved}" class="icon-aprobado">✔</span>
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2025 <span>JobBoard</span></p>
+</footer>
 
 </body>
 </html>

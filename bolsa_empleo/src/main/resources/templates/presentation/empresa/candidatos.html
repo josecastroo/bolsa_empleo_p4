@@ -1,39 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Candidatos</title>
+    <link rel="stylesheet" th:href="@{/styles/empresa/candidatos.css}" href="candidatos.css" />
 </head>
 <body>
 
 <h2 th:text="'Candidatos para: ' + ${puesto.description}"></h2>
 
-<table border="1">
-    <tr>
-        <th>#</th>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Match %</th>
-    </tr>
-    <tr th:each="entry, iter : ${matches}">
-        <td th:text="${iter.index + 1}"></td>
-        <td th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></td>
-        <td th:text="${entry.key.email}"></td>
-        <td th:text="${#numbers.formatDecimal(entry.value, 1, 2)} + '%'"></td>
-        <td>
-            <a th:href="@{'/empresa/candidato/' + ${entry.key.id}}">
-                Ver detalle
-            </a>
-        </td>
-</table>
+<div class="table-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Candidato</th>
+            <th>Match %</th>
+            <th>Ver detalle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry, iter : ${matches}">
+
+            <td>
+                <span class="row-index" th:text="${iter.index + 1}"></span>
+            </td>
+
+            <!-- Nombre + email combinados -->
+            <td>
+                <div class="candidate-name"
+                     th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></div>
+                <div class="candidate-email" th:text="${entry.key.email}"></div>
+            </td>
+
+            <!-- Match con barra visual -->
+            <td>
+                <div class="match-cell">
+                    <div class="match-bar-bg">
+                        <div class="match-bar-fill"
+                             th:style="'width:' + ${entry.value} + '%'"></div>
+                    </div>
+                    <span class="match-value"
+                          th:text="${#numbers.formatDecimal(entry.value, 1, 2)} + '%'"></span>
+                </div>
+            </td>
+
+            <td>
+                <a class="btn-link"
+                   th:href="@{'/empresa/candidato/' + ${entry.key.id}}">Ver detalle</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <h3>Buscar candidato</h3>
 
-<form method="get"
+<form class="search-form" method="get"
       th:action="@{'/empresa/puesto/' + ${puesto.id} + '/candidatos'}">
-
-    <input type="text" name="keyword" placeholder="Nombre...">
-
-    <button type="submit">Buscar</button>
+    <input class="search-input" type="text" name="keyword" placeholder="Nombre..." />
+    <button class="btn-search" type="submit">Buscar</button>
 </form>
+
 </body>
 </html>

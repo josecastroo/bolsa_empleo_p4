@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+    --bg-base: #0f1117;
+    --bg-surface: #181c26;
+    --bg-card: #1e2333;
+    --bg-card-hover: #242840;
+    --bg-input: #141720;
+    --accent: #6C63FF;
+    --accent-hover: #8077ff;
+    --accent-muted: #2a2657;
+    --accent-text: #a89fff;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8b8fa8;
+    --text-muted: #5a5e72;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(108,99,255,0.35);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --font: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-base);
+    font-family: var(--font);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2.5rem 2rem;
+}
+
+.page-wrapper {
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+}
+
+h3 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+}
+
+/* ── Card ── */
+.card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+/* ── Form fields ── */
+.field {
+    margin-bottom: 1.1rem;
+}
+
+.field:last-child { margin-bottom: 0; }
+
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.field textarea,
+.field input[type="number"],
+.field select {
+    width: 100%;
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
+    font-size: 14px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.5;
+}
+
+.field textarea::placeholder,
+.field input::placeholder { color: var(--text-muted); }
+
+.field textarea:focus,
+.field input:focus,
+.field select:focus { border-color: var(--border-accent); }
+
+/* Select arrow */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.field select option {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+/* ── Característica row ── */
+.caracteristica-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+}
+
+.caracteristica-row:last-child { border-bottom: none; }
+
+.caracteristica-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.caracteristica-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.nivel-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.nivel-input {
+    width: 64px;
+    background: var(--bg-input);
+    border: 0.5px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    text-align: center;
+    transition: border-color 0.15s;
+}
+
+.nivel-input:focus { border-color: var(--border-accent); }
+
+/* ── Submit ── */
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-primary:hover { background: var(--accent-hover); }

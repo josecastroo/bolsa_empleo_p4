@@ -1,48 +1,109 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Empresas</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Empresas — Admin</title>
+    <link rel="stylesheet" th:href="@{/styles/admin/empresas.css}"/>
 </head>
 <body>
 
-<h2>Empresas</h2>
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="navbar-logo" href="#">JobBoard</a>
+    <a class="navbar-link active" href="#">Empresas</a>
+    <a class="navbar-link" href="#">Empleos</a>
+    <a class="navbar-link" href="#">Usuarios</a>
+    <div class="navbar-spacer"></div>
+    <span class="navbar-badge">Admin</span>
+</nav>
 
-<table border="1">
-    <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Estado</th>
-        <th>Acción</th>
-    </tr>
+<!-- Page content -->
+<div class="page-wrapper">
 
-    <tr th:each="e : ${empresas}">
-        <td th:text="${e.name}"></td>
-        <td th:text="${e.email}"></td>
+    <!-- Header -->
+    <div class="page-header">
+        <h1>Empresas</h1>
+        <p>Gestión y aprobación de empresas registradas en la plataforma</p>
+    </div>
 
-        <td th:text="${e.approved} ? 'Aprobada' : 'Pendiente'"></td>
+    <!-- Table -->
+    <div class="table-wrapper">
+        <div class="table-header">
+            <span class="table-header-title">Listado de empresas</span>
+        </div>
 
-        <td>
-            <a th:if="${!e.approved}"
-               th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
-                Aprobar
-            </a>
+        <table>
+            <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
 
-            <span th:if="${e.approved}">✔️</span>
-        </td>
-        <td>
-            <a th:if="${!e.approved}"
-               th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
-                Aprobar
-            </a>
+            <!-- Estado vacío -->
+            <tr th:if="${#lists.isEmpty(empresas)}">
+                <td colspan="3">
+                    <div class="empty-state">
+                        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                  d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+                        <p>No hay empresas registradas.</p>
+                    </div>
+                </td>
+            </tr>
 
-            <a th:if="${!e.approved}"
-               th:href="@{'/admin/empresa/' + ${e.id} + '/rechazar'}">
-                Rechazar
-            </a>
-        </td>
-    </tr>
+            <!-- Filas -->
+            <tr th:each="e : ${empresas}">
 
-</table>
+                <!-- Nombre + email combinados -->
+                <td>
+                    <div class="company-cell">
+                        <div class="company-logo"
+                             th:text="${#strings.substring(e.name, 0, 2)}">EM</div>
+                        <div>
+                            <div class="company-name" th:text="${e.name}">Empresa</div>
+                            <div class="company-email" th:text="${e.email}">correo@empresa.com</div>
+                        </div>
+                    </div>
+                </td>
 
+                <!-- Estado -->
+                <td>
+                    <span th:if="${e.approved}" class="badge badge-success">Aprobada</span>
+                    <span th:if="${!e.approved}" class="badge badge-warning">Pendiente</span>
+                </td>
+
+                <!-- Acciones -->
+                <td>
+                    <div class="actions-cell">
+                        <!-- Empresa pendiente: mostrar Aprobar y Rechazar -->
+                        <th:block th:if="${!e.approved}">
+                            <a class="btn-approve"
+                               th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
+                                ✓ Aprobar
+                            </a>
+                            <a class="btn-reject"
+                               th:href="@{'/admin/empresa/' + ${e.id} + '/rechazar'}">
+                                ✕ Rechazar
+                            </a>
+                        </th:block>
+
+                        <!-- Empresa ya aprobada -->
+                        <span th:if="${e.approved}" class="approved-check">
+                ✓ Verificada
+              </span>
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </body>
 </html>

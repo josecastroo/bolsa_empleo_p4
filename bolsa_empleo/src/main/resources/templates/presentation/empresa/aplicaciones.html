@@ -1,60 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Aplicaciones</title>
+    <link rel="stylesheet" th:href="@{/styles/empresa/aplicaciones.css}"/>
 </head>
 <body>
 
 <h2 th:text="'Aplicaciones para: ' + ${puesto.description}"></h2>
 
-<table border="1">
-    <tr>
-        <th>Candidato</th>
-        <th>Email</th>
-        <th>Estado</th>
-        <th>Acción</th>
-        <th>CV</th>
-        <th>Ver detalle</th>
-    </tr>
+<div class="table-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>Candidato</th>
+            <th>Estado</th>
+            <th>Acción</th>
+            <th>CV</th>
+            <th>Ver detalle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="app : ${aplicaciones}">
 
-    <tr th:each="app : ${aplicaciones}">
-        <td th:text="${app.candidato.firstName} + ' ' + ${app.candidato.lastName}"></td>
-        <td th:text="${app.candidato.email}"></td>
-        <td th:text="${app.estado}"></td>
+            <!-- Nombre + email combinados -->
+            <td>
+                <div class="candidate-name"
+                     th:text="${app.candidato.firstName} + ' ' + ${app.candidato.lastName}"></div>
+                <div class="candidate-email" th:text="${app.candidato.email}"></div>
+            </td>
 
-        <td>
-            <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/aceptar'}">Aceptar</a>
-            <a th:href="@{'/empresa/aplicacion/' + ${app.id} + '/rechazar'}">Rechazar</a>
-        </td>
-        <td>
-            <a th:if="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}"
-               th:href="@{'/uploads/' + ${app.candidato.cvPath}}"
-               target="_blank">
-                Ver CV
-            </a>
+            <td>
+                <span class="badge badge-default" th:text="${app.estado}"></span>
+            </td>
 
-            <span th:unless="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}">
-        Sin CV
-    </span>
-        </td>
-        <td>
-            <a th:href="@{'/empresa/candidato/' + ${app.candidato.id}}">
-                Ver detalle
-            </a>
-        </td>
-    </tr>
-    </tr>
-</table>
+            <td>
+                <div class="actions-cell">
+                    <a class="btn-accept"
+                       th:href="@{'/empresa/aplicacion/' + ${app.id} + '/aceptar'}">Aceptar</a>
+                    <a class="btn-reject"
+                       th:href="@{'/empresa/aplicacion/' + ${app.id} + '/rechazar'}">Rechazar</a>
+                </div>
+            </td>
+
+            <td>
+                <a class="btn-link"
+                   th:if="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}"
+                   th:href="@{'/uploads/' + ${app.candidato.cvPath}}"
+                   target="_blank">Ver CV</a>
+                <span class="no-cv"
+                      th:unless="${app.candidato.cvPath != null and !#strings.isEmpty(app.candidato.cvPath)}">Sin CV</span>
+            </td>
+
+            <td>
+                <a class="btn-link"
+                   th:href="@{'/empresa/candidato/' + ${app.candidato.id}}">Ver detalle</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <h3>Buscar candidato</h3>
 
-<form method="get"
+<form class="search-form" method="get"
       th:action="@{'/empresa/puesto/' + ${puesto.id} + '/aplicaciones'}">
-
-    <input type="text" name="keyword" placeholder="Nombre...">
-
-    <button type="submit">Buscar</button>
-
+    <input class="search-input" type="text" name="keyword" placeholder="Nombre..." />
+    <button class="btn-search" type="submit">Buscar</button>
 </form>
 
 </body>

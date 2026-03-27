@@ -1,30 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Dashboard Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin — JobBoard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/admin/dashboard.css}">
 </head>
 <body>
 
-<h2>Panel de Administración</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="nav-logo" th:href="@{/}" href="/">Job<span>Board</span></a>
+</nav>
 
-<ul>
-    <li><a th:href="@{/admin/empresas}">Aprobar Empresas</a></li>
-    <li><a th:href="@{/admin/candidatos}">Aprobar Candidatos</a></li>
-    <li><a th:href="@{/admin/caracteristicas}">Gestionar Características</a></li>
-<!--    <li><a th:href="@{/admin/reporte}">Generar Reporte PDF</a></li>-->
-</ul>
+<main>
 
-<h3>Generar Reporte</h3>
+    <h2 class="page-title">Panel de Administración</h2>
 
-<form action="/admin/reporte" method="get">
+    <!-- Links de navegación -->
+    <p class="section-title">Gestión</p>
+    <ul class="nav-grid">
 
-    <input type="number" name="year" placeholder="Año" required>
+        <li>
+            <a th:href="@{/admin/empresas}">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <rect x="2" y="6" width="12" height="8" rx="1"/>
+                        <path d="M5 6V4a3 3 0 016 0v2"/>
+                    </svg>
+                </div>
+                Aprobar Empresas
+            </a>
+        </li>
 
-    <input type="number" name="month" placeholder="Mes (1-12)" required>
+        <li>
+            <a th:href="@{/admin/candidatos}">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <circle cx="8" cy="5" r="3"/>
+                        <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                Aprobar Candidatos
+            </a>
+        </li>
 
-    <button type="submit">Generar PDF</button>
+        <li>
+            <a th:href="@{/admin/caracteristicas}">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M3 4h10M3 8h7M3 12h5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                Gestionar Características
+            </a>
+        </li>
 
-</form>
+    </ul>
+
+    <!-- Generar Reporte -->
+    <p class="section-title">Generar Reporte</p>
+    <div class="reporte-card">
+        <form class="reporte-form" action="/admin/reporte" method="get">
+
+            <div class="form-group">
+                <label>Año</label>
+                <input type="number" name="year" placeholder="2025" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mes (1-12)</label>
+                <input type="number" name="month" placeholder="1" min="1" max="12" required>
+            </div>
+
+            <button type="submit" class="btn-pdf">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M4 2h6l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z"/>
+                    <path d="M9 2v4h4M8 9v4M6 11l2 2 2-2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Generar PDF
+            </button>
+
+        </form>
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2025 <span>JobBoard</span></p>
+</footer>
 
 </body>
 </html>

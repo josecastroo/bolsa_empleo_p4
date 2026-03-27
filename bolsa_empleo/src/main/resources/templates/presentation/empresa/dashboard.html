@@ -1,55 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Dashboard Empresa</title>
+  <link rel="stylesheet" th:href="@{/styles/empresa/dashboard.css}" href="dashboard-empresa.css" />
 </head>
-
 <body>
-  <h2 th:text="'Bienvenido ' + ${empresa.name}"></h2>
+<div class="page-wrapper">
 
-  <p th:if="${!empresa.approved}" style="color:red">
-    Tu cuenta está pendiente de aprobación
-  </p>
+  <!-- Header -->
+  <div class="page-header">
+    <h2 th:text="'Bienvenido, ' + ${empresa.name}"></h2>
+    <a class="btn-primary" href="/empresa/puesto/nuevo">+ Crear puesto</a>
+  </div>
 
-  <h3>Mis puestos</h3>
+  <!-- Banner pendiente -->
+  <div class="banner-pending" th:if="${!empresa.approved}">
+    ⚠ Tu cuenta está pendiente de aprobación.
+  </div>
 
-  <table border="1">
-    <tr>
-      <th>ID</th>
-      <th>Descripción</th>
-      <th>Salario</th>
-      <th>Tipo</th>
-      <th>Estado</th>
-      <th>Acción</th>
-    </tr>
+  <!-- Tabla de puestos -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Salario</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="p : ${puestos}">
 
-    <tr th:each="p : ${puestos}">
-      <td th:text="${p.id}"></td>
-      <td th:text="${p.description}"></td>
-      <td th:text="${p.salary}"></td>
-      <td th:text="${p.type}"></td>
-      <td th:text="${p.active} ? 'Activo' : 'Inactivo'"></td>
+        <td class="td-id" th:text="${p.id}"></td>
 
-      <td>
-        <a th:href="@{'/empresa/puesto/' + ${p.id} + '/toggle'}">
-          <span th:text="${p.active} ? 'Desactivar' : 'Activar'"></span>
-        </a>
-      </td>
-      <td>
-        <a th:href="@{'/empresa/puesto/' + ${p.id} + '/candidatos'}">
-          Ver candidatos
-        </a>
-      </td>
-      <td>
-        <a th:href="@{'/empresa/puesto/' + ${p.id} + '/aplicaciones'}">
-          Ver aplicaciones
-        </a>
-      </td>
-    </tr>
-  </table>
-  <a href="/empresa/puesto/nuevo">Crear Puesto</a>
+        <td class="td-desc" th:text="${p.description}"></td>
+
+        <td class="td-salary" th:text="${p.salary}"></td>
+
+        <td>
+          <span class="badge badge-gray" th:text="${p.type}"></span>
+        </td>
+
+        <td>
+          <span class="badge badge-success" th:if="${p.active}">Activo</span>
+          <span class="badge badge-muted" th:unless="${p.active}">Inactivo</span>
+        </td>
+
+        <td>
+          <div class="actions-cell">
+            <a th:href="@{'/empresa/puesto/' + ${p.id} + '/toggle'}"
+               th:class="${p.active} ? 'btn-toggle-on' : 'btn-toggle-off'"
+               th:text="${p.active} ? 'Desactivar' : 'Activar'"></a>
+
+            <a class="btn-link"
+               th:href="@{'/empresa/puesto/' + ${p.id} + '/candidatos'}">Ver candidatos</a>
+
+            <a class="btn-link"
+               th:href="@{'/empresa/puesto/' + ${p.id} + '/aplicaciones'}">Ver aplicaciones</a>
+          </div>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
 </body>
-
 </html>

@@ -1,27 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Mis Aplicaciones</title>
+    <link rel="stylesheet" th:href="@{/styles/candidato/aplicaciones.css}" href="mis-aplicaciones.css" />
 </head>
 <body>
+<div class="page-wrapper">
 
-<h2>Mis Aplicaciones</h2>
+    <h2>Mis Aplicaciones</h2>
 
-<table border="1">
-    <tr>
-        <th>Puesto</th>
-        <th>Empresa</th>
-        <th>Estado</th>
-        <th>Fecha</th>
-    </tr>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Puesto</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${aplicaciones}">
 
-    <tr th:each="app : ${aplicaciones}">
-        <td th:text="${app.puesto.description}"></td>
-        <td th:text="${app.puesto.empresa.name}"></td>
-        <td th:text="${app.estado}"></td>
-        <td th:text="${app.date}"></td>
-    </tr>
-</table>
+                <!-- Puesto + empresa combinados -->
+                <td>
+                    <div class="td-puesto" th:text="${app.puesto.description}"></div>
+                    <div class="td-empresa" th:text="${app.puesto.empresa.name}"></div>
+                </td>
 
+                <td>
+                    <span class="badge badge-default" th:text="${app.estado}"></span>
+                </td>
+
+                <td class="td-date" th:text="${app.date}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </body>
 </html>

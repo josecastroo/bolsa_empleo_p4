@@ -1,70 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8" />
     <title>Detalle Candidato</title>
+    <link rel="stylesheet" th:href="@{/styles/empresa/candidato_detalle.css}" />
 </head>
 <body>
+<div class="page-wrapper">
 
-<h2>Detalle del Candidato</h2>
+    <h2>Detalle del Candidato</h2>
 
-<h3>Información Personal</h3>
+    <!-- Información Personal -->
+    <div class="card">
+        <div class="card-title">Información Personal</div>
 
-<p>
-    <b>Identificación:</b>
-    <span th:text="${candidato.identification}"></span>
-</p>
+        <div class="info-row">
+            <span class="info-label">Identificación</span>
+            <span class="info-value" th:text="${candidato.identification}"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Nombre</span>
+            <span class="info-value"
+                  th:text="${candidato.firstName} + ' ' + ${candidato.lastName}"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Nacionalidad</span>
+            <span class="info-value" th:text="${candidato.nationality}"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Teléfono</span>
+            <span class="info-value" th:text="${candidato.phone}"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value" th:text="${candidato.email}"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Residencia</span>
+            <span class="info-value" th:text="${candidato.residence}"></span>
+        </div>
+    </div>
 
-<p>
-    <b>Nombre:</b>
-    <span th:text="${candidato.firstName} + ' ' + ${candidato.lastName}"></span>
-</p>
+    <!-- Habilidades -->
+    <div class="card">
+        <div class="card-title">Habilidades</div>
+        <ul class="skill-list">
+            <li class="skill-item" th:each="h : ${habilidades}">
+                <span th:text="${h.caracteristica.name}"></span>
+                <span class="skill-level" th:text="${h.level}"></span>
+            </li>
+        </ul>
+    </div>
 
-<p>
-    <b>Nacionalidad:</b>
-    <span th:text="${candidato.nationality}"></span>
-</p>
+    <!-- Currículum -->
+    <div class="card">
+        <div class="card-title">Currículum</div>
+        <a class="btn-link"
+           th:if="${candidato.cvPath != null}"
+           th:href="@{'/uploads/' + ${candidato.cvPath}}"
+           target="_blank">Ver CV</a>
+        <span class="no-cv" th:if="${candidato.cvPath == null}">No tiene CV</span>
+    </div>
 
-<p>
-    <b>Teléfono:</b>
-    <span th:text="${candidato.phone}"></span>
-</p>
-
-<p>
-    <b>Email:</b>
-    <span th:text="${candidato.email}"></span>
-</p>
-
-<p>
-    <b>Residencia:</b>
-    <span th:text="${candidato.residence}"></span>
-</p>
-
-<hr>
-
-<h3>Habilidades</h3>
-
-<ul>
-    <li th:each="h : ${habilidades}">
-        <span th:text="${h.caracteristica.name}"></span>
-        -
-        Nivel:
-        <span th:text="${h.level}"></span>
-    </li>
-</ul>
-
-<hr>
-
-<h3>Currículum</h3>
-
-<a th:if="${candidato.cvPath != null}"
-   th:href="@{'/uploads/' + ${candidato.cvPath}}"
-   target="_blank">
-    Ver CV
-</a>
-
-<span th:if="${candidato.cvPath == null}">
-    No tiene CV
-</span>
-
+</div>
 </body>
 </html>
