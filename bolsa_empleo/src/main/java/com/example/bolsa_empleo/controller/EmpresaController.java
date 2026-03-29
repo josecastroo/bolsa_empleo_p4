@@ -95,6 +95,7 @@ public class EmpresaController {
     @PostMapping("/puesto")
     public String guardarPuesto(@ModelAttribute Puesto puesto,
                                 @RequestParam(required = false) List<Long> caracteristicaIds,
+                                @RequestParam(required = false) List<Long> seleccionadas,
                                 @RequestParam(required = false) List<Integer> niveles,
                                 HttpSession session) {
 
@@ -113,9 +114,20 @@ public class EmpresaController {
         puesto.setCreatedAt(java.time.LocalDateTime.now());
         puestoRepository.save(puesto);
 
-        if (caracteristicaIds != null && niveles != null) {
+        if (caracteristicaIds != null && niveles != null
+                && seleccionadas != null
+                && caracteristicaIds.size() == niveles.size()) {
+
             for (int i = 0; i < caracteristicaIds.size(); i++) {
-                Caracteristica c = caracteristicaRepository.findById(caracteristicaIds.get(i)).orElse(null);
+                Long idCaracteristica = caracteristicaIds.get(i);
+
+                if (!seleccionadas.contains(idCaracteristica)) continue;
+
+                Caracteristica c = caracteristicaRepository
+                        .findById(idCaracteristica)
+                        .orElse(null);
+
+                if (c == null) continue;
 
                 PuestoCaracteristica pc = new PuestoCaracteristica();
                 pc.setPuesto(puesto);
@@ -125,6 +137,7 @@ public class EmpresaController {
                 puestoCaracteristicaRepository.save(pc);
             }
         }
+
         return "redirect:/empresa/dashboard";
     }
 
@@ -145,7 +158,7 @@ public class EmpresaController {
             return "redirect:/empresa/dashboard";
         }
 
-        if (!(puesto.getEmpresa().getId() == empresa.getId())) {
+        if (puesto.getEmpresa().getId() != empresa.getId()) {
             return "redirect:/empresa/dashboard";
         }
 
@@ -226,12 +239,15 @@ public class EmpresaController {
 
         var aplicaciones = aplicacionRepository.findByPuestoId(puesto.getId());
 
+        aplicaciones = aplicaciones.stream()
+                .filter(app -> !app.getEstado().equals("RECHAZADO"))
+                .toList();
+
         if (keyword != null && !keyword.isEmpty()) {
             aplicaciones = aplicaciones.stream()
                     .filter(app -> {
                         var c = app.getCandidato();
                         if (c == null) return false;
-
                         String nombre = (c.getFirstName() + " " + c.getLastName()).toLowerCase();
                         return nombre.contains(keyword.toLowerCase());
                     })

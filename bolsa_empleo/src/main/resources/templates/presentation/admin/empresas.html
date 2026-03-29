@@ -10,10 +10,6 @@
 
 <!-- Navbar -->
 <nav class="navbar">
-    <a class="navbar-logo" href="#">JobBoard</a>
-    <a class="navbar-link active" href="#">Empresas</a>
-    <a class="navbar-link" href="#">Empleos</a>
-    <a class="navbar-link" href="#">Usuarios</a>
     <div class="navbar-spacer"></div>
     <span class="navbar-badge">Admin</span>
 </nav>
@@ -27,7 +23,6 @@
         <p>Gestión y aprobación de empresas registradas en la plataforma</p>
     </div>
 
-    <!-- Table -->
     <div class="table-wrapper">
         <div class="table-header">
             <span class="table-header-title">Listado de empresas</span>
@@ -43,7 +38,6 @@
             </thead>
             <tbody>
 
-            <!-- Estado vacío -->
             <tr th:if="${#lists.isEmpty(empresas)}">
                 <td colspan="3">
                     <div class="empty-state">
@@ -56,10 +50,8 @@
                 </td>
             </tr>
 
-            <!-- Filas -->
             <tr th:each="e : ${empresas}">
 
-                <!-- Nombre + email combinados -->
                 <td>
                     <div class="company-cell">
                         <div class="company-logo"
@@ -71,16 +63,13 @@
                     </div>
                 </td>
 
-                <!-- Estado -->
                 <td>
                     <span th:if="${e.approved}" class="badge badge-success">Aprobada</span>
                     <span th:if="${!e.approved}" class="badge badge-warning">Pendiente</span>
                 </td>
 
-                <!-- Acciones -->
                 <td>
                     <div class="actions-cell">
-                        <!-- Empresa pendiente: mostrar Aprobar y Rechazar -->
                         <th:block th:if="${!e.approved}">
                             <a class="btn-approve"
                                th:href="@{'/admin/empresa/' + ${e.id} + '/aprobar'}">
@@ -92,7 +81,6 @@
                             </a>
                         </th:block>
 
-                        <!-- Empresa ya aprobada -->
                         <span th:if="${e.approved}" class="approved-check">
                 ✓ Verificada
               </span>

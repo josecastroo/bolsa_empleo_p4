@@ -26,14 +26,12 @@
                 <span class="row-index" th:text="${iter.index + 1}"></span>
             </td>
 
-            <!-- Nombre + email combinados -->
             <td>
                 <div class="candidate-name"
                      th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></div>
                 <div class="candidate-email" th:text="${entry.key.email}"></div>
             </td>
 
-            <!-- Match con barra visual -->
             <td>
                 <div class="match-cell">
                     <div class="match-bar-bg">

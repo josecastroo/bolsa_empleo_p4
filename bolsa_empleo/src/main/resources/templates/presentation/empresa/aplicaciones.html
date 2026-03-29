@@ -23,7 +23,6 @@
         <tbody>
         <tr th:each="app : ${aplicaciones}">
 
-            <!-- Nombre + email combinados -->
             <td>
                 <div class="candidate-name"
                      th:text="${app.candidato.firstName} + ' ' + ${app.candidato.lastName}"></div>

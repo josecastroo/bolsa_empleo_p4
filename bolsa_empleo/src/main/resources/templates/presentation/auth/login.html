@@ -9,9 +9,8 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-    <a class="nav-logo" th:href="@{/}" href="/">Job<span>Board</span></a>
+    <a class="nav-logo" th:href="@{/}" href="/">Bolsa<span>Empleo</span></a>
 </nav>
 
 <div class="login-wrapper">
@@ -19,7 +18,6 @@
 
         <h2>Iniciar sesión</h2>
 
-        <!-- Mensajes de estado -->
         <div th:if="${param.error}" class="msg msg-error">
             Credenciales incorrectas.
         </div>
@@ -30,7 +28,6 @@
             Sesión cerrada correctamente.
         </div>
 
-        <!-- Formulario -->
         <form th:action="@{/login}" method="post">
 
             <div class="form-group">
@@ -59,7 +56,6 @@
 
         <hr class="divider">
 
-        <!-- Registro -->
         <div class="register-section">
             <h3>¿No tienes cuenta?</h3>
             <div class="register-links">
@@ -71,9 +67,8 @@
     </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-    <p>© 2025 <span>JobBoard</span></p>
+    <p>© 2026 <span>BolsaEmpleo</span></p>
 </footer>
 
 </body>

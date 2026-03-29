@@ -17,13 +17,11 @@
     <div class="card">
         <form th:action="@{/candidato/registro}" th:object="${candidato}" method="post">
 
-            <!-- Identificación (fila completa) -->
             <div class="field">
                 <label>Identificación</label>
                 <input type="text" th:field="*{identification}" required placeholder="Número de identificación" />
             </div>
 
-            <!-- Nombre + Apellido -->
             <div class="field-row">
                 <div class="field">
                     <label>Nombre</label>
@@ -35,7 +33,6 @@
                 </div>
             </div>
 
-            <!-- Nacionalidad + Residencia -->
             <div class="field-row">
                 <div class="field">
                     <label>Nacionalidad</label>
@@ -47,11 +44,10 @@
                 </div>
             </div>
 
-            <!-- Teléfono + Email -->
             <div class="field-row">
                 <div class="field">
                     <label>Teléfono</label>
-                    <input type="text" th:field="*{phone}" required placeholder="+506 0000-0000" />
+                    <input type="text" th:field="*{phone}" required placeholder="0000 0000" />
                 </div>
                 <div class="field">
                     <label>Email</label>
@@ -61,13 +57,11 @@
 
             <hr class="divider" />
 
-            <!-- Contraseña -->
             <div class="field">
                 <label>Contraseña</label>
                 <input type="password" th:field="*{password}" required placeholder="••••••••" />
             </div>
 
-            <!-- Hidden -->
             <input type="hidden" th:field="*{approved}" value="true" />
 
             <button class="btn-primary" type="submit">Crear cuenta</button>

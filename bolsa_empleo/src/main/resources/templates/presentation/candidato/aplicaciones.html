@@ -22,7 +22,6 @@
             <tbody>
             <tr th:each="app : ${aplicaciones}">
 
-                <!-- Puesto + empresa combinados -->
                 <td>
                     <div class="td-puesto" th:text="${app.puesto.description}"></div>
                     <div class="td-empresa" th:text="${app.puesto.empresa.name}"></div>

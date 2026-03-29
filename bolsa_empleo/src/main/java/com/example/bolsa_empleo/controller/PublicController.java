@@ -55,6 +55,9 @@ public class PublicController {
 
         List<Puesto> puestos = puestoRepository.findAll();
 
+        System.out.println("caracteristicaId recibido: " + caracteristicaId);
+        System.out.println("Total puestos: " + puestos.size());
+
         if (keyword != null && !keyword.isEmpty()) {
             puestos = puestos.stream()
                     .filter(p -> p.getDescription().toLowerCase()
@@ -63,12 +66,20 @@ public class PublicController {
         }
 
         if (caracteristicaId != null) {
+            for (Puesto p : puestos) {
+                var pcs = puestoCaracteristicaRepository.findByPuesto(p);
+                System.out.println("Puesto " + p.getId() + " tiene " + pcs.size() + " características");
+                for (var pc : pcs) {
+                    System.out.println("  -> caracteristica id: " + pc.getCaracteristica().getId());
+                }
+            }
+
             puestos = puestos.stream()
                     .filter(p -> {
                         var pcs = puestoCaracteristicaRepository.findByPuesto(p);
                         return pcs.stream().anyMatch(pc ->
                                 pc.getCaracteristica() != null &&
-                                        pc.getCaracteristica().getId() == caracteristicaId
+                                        pc.getCaracteristica().getId() == caracteristicaId.longValue()
                         );
                     })
                     .toList();

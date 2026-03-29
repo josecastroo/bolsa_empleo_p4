@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin — JobBoard</title>
+    <title>Dashboard Admin — BolsaEmpleo</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/styles/admin/dashboard.css}">
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-    <a class="nav-logo" th:href="@{/}" href="/">Job<span>Board</span></a>
+    <a class="nav-logo" th:href="@{/}" href="/">Bolsa<span>Empleo</span></a>
 </nav>
 
 <main>
 
     <h2 class="page-title">Panel de Administración</h2>
 
-    <!-- Links de navegación -->
     <p class="section-title">Gestión</p>
     <ul class="nav-grid">
 
@@ -59,7 +57,6 @@
 
     </ul>
 
-    <!-- Generar Reporte -->
     <p class="section-title">Generar Reporte</p>
     <div class="reporte-card">
         <form class="reporte-form" action="/admin/reporte" method="get">
@@ -88,7 +85,7 @@
 </main>
 
 <footer>
-    <p>© 2025 <span>JobBoard</span></p>
+    <p>© 2026 <span>BolsaEmpleo</span></p>
 </footer>
 
 </body>

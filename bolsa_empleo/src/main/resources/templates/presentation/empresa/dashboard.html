@@ -8,18 +8,17 @@
 <body>
 <div class="page-wrapper">
 
-  <!-- Header -->
+
   <div class="page-header">
     <h2 th:text="'Bienvenido, ' + ${empresa.name}"></h2>
     <a class="btn-primary" href="/empresa/puesto/nuevo">+ Crear puesto</a>
   </div>
 
-  <!-- Banner pendiente -->
   <div class="banner-pending" th:if="${!empresa.approved}">
     ⚠ Tu cuenta está pendiente de aprobación.
   </div>
 
-  <!-- Tabla de puestos -->
+
   <div class="table-wrapper">
     <table>
       <thead>

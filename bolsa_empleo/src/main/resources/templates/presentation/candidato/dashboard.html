@@ -8,7 +8,6 @@
 <body>
 <div class="page-wrapper">
 
-    <!-- Alerts -->
     <div class="alert alert-danger" th:if="${param.yaAplico}">
         ✕ Ya aplicaste a este puesto.
     </div>
@@ -16,7 +15,6 @@
         ✓ Aplicación enviada correctamente.
     </div>
 
-    <!-- Header -->
     <div class="page-header">
         <div class="page-header-text">
             <h2 th:text="'Bienvenido, ' + ${candidato.firstName}"></h2>
@@ -28,7 +26,6 @@
         </div>
     </div>
 
-    <!-- CV upload -->
     <div class="cv-card">
         <div>
             <div class="cv-label">Currículum (CV)</div>
@@ -41,7 +38,6 @@
         </form>
     </div>
 
-    <!-- Oportunidades -->
     <h2 class="section-title">Mis oportunidades</h2>
 
     <div class="table-wrapper">

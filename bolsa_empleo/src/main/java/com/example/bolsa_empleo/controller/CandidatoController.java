@@ -72,7 +72,14 @@ public class CandidatoController {
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
 
-        Candidato candidato = (Candidato) session.getAttribute("candidatoLogueado");
+        Candidato candidatoSesion = (Candidato) session.getAttribute("candidatoLogueado");
+
+        if (candidatoSesion == null) {
+            return "redirect:/login";
+        }
+
+        // Recargar desde BD para evitar objeto detached
+        Candidato candidato = candidatoRepository.findById(candidatoSesion.getId()).orElse(null);
 
         if (candidato == null) {
             return "redirect:/login";
@@ -89,7 +96,9 @@ public class CandidatoController {
                 matches.add(Map.entry(p, score));
             }
         }
+
         matches.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
         model.addAttribute("candidato", candidato);
         model.addAttribute("matches", matches);
 
@@ -113,6 +122,7 @@ public class CandidatoController {
 
     @PostMapping("/habilidades")
     public String guardarHabilidades(@RequestParam(required = false) List<Long> caracteristicaIds,
+                                     @RequestParam(required = false) List<Long> seleccionadas,
                                      @RequestParam(required = false) List<Integer> niveles,
                                      HttpSession session) {
 
@@ -122,11 +132,17 @@ public class CandidatoController {
             return "redirect:/login";
         }
 
-        if (caracteristicaIds != null && niveles != null) {
+        if (caracteristicaIds != null && niveles != null
+                && seleccionadas != null
+                && caracteristicaIds.size() == niveles.size()) {
+
             for (int i = 0; i < caracteristicaIds.size(); i++) {
+                Long idCaracteristica = caracteristicaIds.get(i);
+
+                if (!seleccionadas.contains(idCaracteristica)) continue;
 
                 Caracteristica c = caracteristicaRepository
-                        .findById(caracteristicaIds.get(i))
+                        .findById(idCaracteristica)
                         .orElse(null);
 
                 if (c == null) continue;
@@ -144,7 +160,6 @@ public class CandidatoController {
                     cc.setCandidato(candidato);
                     cc.setCaracteristica(c);
                     cc.setLevel(niveles.get(i));
-
                     candidatoCaracteristicaRepository.save(cc);
                 }
             }

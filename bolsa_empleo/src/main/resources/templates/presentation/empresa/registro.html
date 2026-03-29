@@ -17,7 +17,6 @@
     <div class="card">
         <form th:action="@{/empresa/registro}" th:object="${empresa}" method="post">
 
-            <!-- Nombre + Ubicación -->
             <div class="field-row">
                 <div class="field">
                     <label>Nombre</label>
@@ -29,7 +28,6 @@
                 </div>
             </div>
 
-            <!-- Email + Teléfono -->
             <div class="field-row">
                 <div class="field">
                     <label>Email</label>
@@ -41,7 +39,6 @@
                 </div>
             </div>
 
-            <!-- Descripción -->
             <div class="field">
                 <label>Descripción</label>
                 <textarea th:field="*{description}" placeholder="Contanos sobre tu empresa..."></textarea>
@@ -49,7 +46,6 @@
 
             <hr class="divider" />
 
-            <!-- Contraseña -->
             <div class="field">
                 <label>Contraseña</label>
                 <input type="password" th:field="*{password}" required placeholder="••••••••" />

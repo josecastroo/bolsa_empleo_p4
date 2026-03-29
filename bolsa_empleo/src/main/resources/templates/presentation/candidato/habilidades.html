@@ -14,10 +14,12 @@
 
         <div class="card">
             <div class="caracteristica-row" th:each="c : ${caracteristicas}">
-                <input type="checkbox" name="caracteristicaIds" th:value="${c.id}" />
+                <!-- Siempre se envía el id -->
+                <input type="hidden" name="caracteristicaIds" th:value="${c.id}" />
+                <input type="checkbox" name="seleccionadas" th:value="${c.id}" />
                 <span class="caracteristica-name" th:text="${c.name}"></span>
                 <span class="nivel-label">Nivel</span>
-                <input class="nivel-input" type="number" name="niveles" min="1" max="5" placeholder="1" />
+                <input class="nivel-input" type="number" name="niveles" min="1" max="5" placeholder="1" value="1" />
             </div>
         </div>
 
